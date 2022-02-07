@@ -1,0 +1,139 @@
+* {
+  border : 1px solid;
+}
+
+body {
+  font-family: 'Lato', sans-serif;  
+}
+
+.title {
+  text-align: center;
+  padding: 30px 0;
+}
+
+.players {
+  /* height: 50px; */
+  display: flex;
+  justify-content: center;
+}
+
+.displayPlayers {
+  display: flex;
+}
+
+#player1 {
+  text-align: right;
+}
+
+#hand2 {
+  text-align: right;
+}
+
+.player {
+  /* width: 150px; */
+  margin: auto;  
+  text-transform: uppercase;
+  font-size: 32px;
+  padding: 10px;
+}
+
+.hand {
+  width: 50px;
+  margin: auto;
+  padding: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  line-height: 150px;
+}
+
+.box {
+  width: 150px;
+  height: 150px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; 
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  text-align: center;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  /* display: flex;
+  position: relative;
+  justify-content: center;
+  flex-direction: row;
+  background-color: #fefefe;
+  margin: 15% auto; 
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%; 
+  height: 200px; */
+  /* margin: 0 auto; */
+  position: absolute;
+     margin: auto;
+     top: 0;
+     right: 0;
+     bottom: 0;
+     left: 0;
+     width: 50%;
+     height: 300px;
+     background-color: rgba(255, 255, 255, 0.8);
+  color: black;
+}
+
+.button {
+  text-align: center;
+  padding: 20px;
+}
+
+.btn {
+  width: 100px;
+}
+
+/* #bloc {
+     display: inline-block;
+     color: chocolate;
+     margin: 0 auto;
+     position: relative;
+     top: 50%;
+     transform: translateY(-50%);
+     -webkit-transform: translateY(-50%);
+     -moz-transform: translateY(-50%);
+     -ms-transform: translateY(-50%);
+     -o-transform: translateY(-50%); 
+} */
+
+
+/* The Close Button */
+.close {
+  position: absolute;
+  /* display: inline-block; */
+  color: #aaa;
+  bottom: 0;
+  right: 0;
+  font-size: 28px;
+  font-weight: bold;
+  width: auto;  
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}

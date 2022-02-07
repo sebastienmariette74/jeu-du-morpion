@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>le jeu du morpion</title>
+</head>
+<body>
+  <div class="title">
+    <h1>Le jeu du morpion</h1>
+  </div>
+  <div class="players">
+    <div class="displayPlayers">
+      <div id="player1" class="player">Player 1</div>
+      <div id="hand1" class="hand"></div>
+    </div>
+    <div class="displayPlayers">
+      <div id="hand2" class="hand"></div>
+      <div id="player2" class="player">Player 2</div>
+    </div>
+  </div>
+  <div class="button">
+    <button id="start" class="btn btn-primary">START</button>
+    <button id="restart" class="btn btn-danger">RESTART</button>
+  </div>
+  <div class="row">
+    <div id="box1" class="box"></div>
+    <div id="box2" class="box"></div>
+    <div id="box3" class="box"></div>
+  </div>
+  <div class="row">
+    <div id="box4" class="box"></div>
+    <div id="box5" class="box"></div>
+    <div id="box6" class="box"></div>
+  </div>
+  <div class="row">
+    <div id="box7" class="box"></div>
+    <div id="box8" class="box"></div>
+    <div id="box9" class="box"></div>
+  </div>
+  <div id="window-winner" class="modal">  
+    <div id="modalContent" class="modal-content"> 
+      <div id="messageWinPlayer1">
+      </div>
+      <span id="close-window-winner" class="close">&times;</span>        
+    </div>
+  </div>
+  <div id="window-equality" class="modal">  
+    <div id="modalContent2" class="modal-content"> 
+      <div id="messageEquality">
+      </div>
+      <span id="close-window-equality" class="close">&times;</span>        
+    </div>
+  </div>
+  
+  <div id="window-open" class="modal">  
+    <div id="modalContent1" class="modal-content">    
+      <!-- <span class="close">&times;</span>   -->
+      <input type="text" name="namePlayer1" id="namePlayer1" placeholder="Nom du Joueur 1">
+      <input type="text" name="namePlayer1" id="namePlayer2" placeholder="Nom du Joueur 2">
+      <select id="firstPlayer" class="form-select" aria-label="Default select example">
+        <option  selected>Qui veut commencer ?</option>
+        <option id="textJoueur1" value="player1">
+          <!-- Joueur 1 commence -->
+        </option>
+        <option id="textJoueur2" value="player2">
+          <!-- Joueur 2 commence -->
+        </option>
+      </select>
+      <button id="btn1" class="btn btn-primary">suivant</button>
+    </div>
+  </div>
+  
+
+
+  <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+</body>
+</html>
