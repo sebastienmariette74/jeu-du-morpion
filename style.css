@@ -1,5 +1,5 @@
 * {
-  border : 1px solid;
+  /* border : 1px solid; */
 }
 
 body {
@@ -11,8 +11,42 @@ body {
   padding: 30px 0;
 }
 
+#grid {
+  /* text-align: center; */
+  position: relative;
+}
+
+.box {
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.under_grid {
+  position: absolute;
+  height: 480px;
+  width: 480px;
+  /*background: chocolate;
+  */top: 0;
+  left: 50%;
+  z-index: -1;
+  transform: translatex(-50%);
+  -webkit-transform: translatexY(-50%);
+  -moz-transform: translatexY(-50%);
+  -ms-transform: translatexY(-50%);
+  -o-transform: translatexY(-50%);
+  outline: chocolate solid 20px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
 .players {
-  /* height: 50px; */
+  height: 150px;
   display: flex;
   justify-content: center;
 }
@@ -55,6 +89,7 @@ body {
   height: 150px;
   border: 1px solid black;
   cursor: pointer;
+  margin: 5px;
 }
 
 .modal {
@@ -102,7 +137,9 @@ body {
 }
 
 .btn {
-  width: 100px;
+  width: 150px;
+  text-transform: uppercase;
+
 }
 
 /* #bloc {
