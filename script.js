@@ -30,15 +30,15 @@ let tab = [];
 for (let i = 0 ; i < tableBox.length ; i++){
   tab.push(tableBox[i].id);
 };
-console.log(tableBox);
-console.log(tab);
+// console.log(tableBox);
+// console.log(tab);
 
 
 let start = document.getElementById('start');
 let restart = document.getElementById('restart');
 restart.disabled = true;    
 // start.disabled = false;    
-console.log(start.disabled);
+// console.log(start.disabled);
 
 // initialisation de l'affichage du tableau
 let displayTableDark = () => {  
@@ -64,6 +64,11 @@ let displayPlayer2 = document.getElementById('player2');
 let minimisedGame = document.getElementById('minimisedGame');
 let maximisedGame = document.getElementById('maximisedGame');
 let player1 = true;
+let victoriesPlayer1 = 0;
+let victoriesPlayer2 = 0;
+let gameInProgress = true;
+let player1Win = true;
+let gameWinned = false;
 
 let initialParameters = () => {
   for (let i = 0 ; i < tableBox.length ; i++){
@@ -77,8 +82,33 @@ let initialParameters = () => {
   handNumber = 0;
   displayPlayer1.style.opacity = 0.3;
   displayPlayer2.style.opacity = 0.3;
-  maximisedGame.disabled = true;
+  // maximisedGame.disabled = true;
   player1 = true;
+  // victoriesPlayer1 = 0;
+  // victoriesPlayer2 = 0;
+};
+let initialParametersBegin = () => {
+  for (let i = 0 ; i < tableBox.length ; i++){
+    tableBox[i].innerText = '';
+    // tableBox[i].style.cursor = 'default';
+    displayTableClear();
+  };
+  gameInProgress = true;
+  // gameEnd = false;
+  minimisedGameActivated = false;
+  maximisedGameActivated = false;
+  handNumber = 0;
+  // displayPlayer1.style.opacity = 0.3;
+  // displayPlayer2.style.opacity = 0.3;
+  // if (player1Win){
+  //   player1 = false;
+  // } else {
+  //   player1 = true;
+  // };
+  // maximisedGame.disabled = true;
+  // player1 = true;
+  // victoriesPlayer1 = 0;
+  // victoriesPlayer2 = 0;
 };
 
 initialParameters();
@@ -99,7 +129,6 @@ let initializedHand = () => {
 
 let gameWon = false;
 
-
 let play1 = document.getElementById('player1');
 
 let play2 = document.getElementById('player2');
@@ -109,15 +138,17 @@ let modal1 = document.getElementById("window-open");
 let modal2 = document.getElementById("window-equality");
 let modalContent = document.getElementById("modalContent");
 
-let closeWindowWinner = document.getElementById('close-window-winner');
-let closeWindowEquality = document.getElementById("close-window-equality");
+let btnBeginWindowWinner = document.getElementById('begin_Button_window_winner');
+let btnRestartWindowWinner = document.getElementById('restart_Button_window_winner');
+let btnBeginWindowEquality = document.getElementById('begin_Button_window_equality');
+let btnRestartWindowEquality = document.getElementById('restart_Button_window_equality');
 
 let firstPlayer = document.getElementById('firstPlayer');
 
 let textJoueur1 = document.getElementById('textJoueur1');
 let textJoueur2 = document.getElementById('textJoueur2');
 
-let messageWinPlayer1 = document.getElementById('messageWinPlayer1');
+let messageWinPlayer = document.getElementById('messageWinPlayer');
 let equality = document.getElementById('messageEquality');
 
 let btnGames = document.getElementById('btnGames');
@@ -152,9 +183,13 @@ let force = 0;
 // fonction appelée lorsqu'on clique sur une case. Suivant le joueur, on met un rond ou une croix et on détermine le gagnant ou l'égalité.
 let clic = (event) => { 
   start.disabled = false;  
-  event.addEventListener('click', (e)=>{    
-    force ++;
-    console.log(force);
+  event.addEventListener('click', (e)=>{  
+    console.log(player1);  
+    // force ++;
+    // console.log(force);
+    console.log('gameend : ' + gameEnd);
+    console.log('event.innerText : ' + event.innerText);
+    console.log('start.disabled : ' + start.disabled);    
     if (gameEnd || event.innerText !== '' || start.disabled === false){
       e.preventDefault();
     } else if (player1){
@@ -220,8 +255,10 @@ start.addEventListener('click', (event) => {
     console.log('if start');
     displayTableClear();
     start.disabled = true;  
-    hand1.innerText = 'O';
-    play1.style.opacity = 1;
+    if (player1){
+      hand1.innerText = 'O';
+      play1.style.opacity = 1;
+    };
     firstGame = false;
     // for (let i = 0 ; i < tableBox.length ; i++){
     //   tableBox[i].style.cursor = 'pointer';
@@ -241,9 +278,9 @@ start.addEventListener('click', (event) => {
 // ouvre la fenêtre demandant les noms des joueurs
 maximisedGame.addEventListener('click', () => {
   modal1.style.display = 'block';
-  btnGames.style.display = 'none';
+  btnGames.style.display = 'block';
   maximisedGameActivated = true;
-  btnStarts.style.display = 'block';
+  // btnStarts.style.display = 'block';
 });
 // (() => {   
 //   modal1.style.display = 'block';
@@ -269,9 +306,17 @@ btn1.addEventListener('click', () => {
     hand1.innerText = '';
     player1 = false;
     displayPlayer2.style.opacity = 1;
-
   };
   modal1.style.display = 'none';
+  btnGames.style.display = 'none';
+  // maximisedGameActivated = true;
+  btnStarts.style.display = 'block';
+  // start.disabled = true;
+  restart.disabled = true;
+  displayTableDark();
+  // hand1.innerText = 'O';
+  // play1.style.opacity = 1;
+  gameEnd = false;
 });
 
 // lorsque le joueur 1 entre son nom, ce dernier s'ajoute à la liste select
@@ -298,6 +343,7 @@ let whoPlay = () => {
 // ouvre la fenêtre annoncant le vainqueur
 let messageWinner = () => {
   if (player1){
+    victoriesPlayer1 ++;
     displayPlayer2.style.opacity = 0.3;
     displayPlayer1.style.opacity = 0.3;
     // let bloc = document.createElement('div');
@@ -305,15 +351,25 @@ let messageWinner = () => {
     // let texte = document.createTextNode("Bravo Player 1, vous avez gagné la partie !!!");
     // bloc.appendChild(texte);
     // modalContent.prepend(bloc);
-    messageWinPlayer1.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!!";
+    if (victoriesPlayer1 > victoriesPlayer2){
+      messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \nvous menez " + victoriesPlayer1 + " à " + victoriesPlayer2;
+    } else if (victoriesPlayer1 < victoriesPlayer2){
+      messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \n" + play2.innerText + " mène " + victoriesPlayer2 + " à " + victoriesPlayer1;
+    } else {
+      messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \nVous êtes à " + victoriesPlayer1 + " partout.";
+    };
+    
     modal.style.display = 'block';
     start.disabled = true;  
     restart.disabled = true; 
-    gameEnd = true;
+    player1Win = true;
+    gameWinned = true;
+    // gameEnd = true;
     // for (let i = 0 ; i < tableBox.length ; i++){
     //   tableBox[i].style.cursor = 'default';
     // };
   } else {
+    victoriesPlayer2 ++;
     displayPlayer2.style.opacity = 0.3;
     displayPlayer1.style.opacity = 0.3;
     // let bloc = document.createElement('div');
@@ -321,11 +377,20 @@ let messageWinner = () => {
     // let texte = document.createTextNode("Bravo Player 2, vous avez gagné la partie !!!");
     // bloc.appendChild(texte);
     // modalContent.prepend(bloc);
-    messageWinPlayer1.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!!";
+    // messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!!";
+    if (victoriesPlayer2 > victoriesPlayer1){
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!! \nvous menez " + victoriesPlayer2 + " à " + victoriesPlayer1 + '.';
+    } else if (victoriesPlayer2 < victoriesPlayer1){
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!! \n" + play1.innerText + " mène " + victoriesPlayer1 + " à " + victoriesPlayer2 + '.';;
+    } else {
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!! \nVous êtes à " + victoriesPlayer1 + " manche(s) partout.";
+    };
     modal.style.display = 'block'; 
     start.disabled = true;    
     restart.disabled = true; 
-    gameEnd = true;
+    player1Win = false;
+    gameWinned = true;
+    // gameEnd = true;
     // for (let i = 0 ; i < tableBox.length ; i++){
     //   tableBox[i].style.cursor = 'default';
     // };
@@ -334,11 +399,13 @@ let messageWinner = () => {
 
 // ouvre la fenêtre d'égalité
 let messageEquality = () => {
-  if (handNumber === 9){
+  console.log('handNumber = ' + handNumber);
+  console.log('gameWinned = ' + gameWinned);
+  if (handNumber === 9 /*&& gameWinned === false*/){
     equality.innerText = "Pas de gagnant !!!";
     modal2.style.display = 'block';
     start.disabled = true;    
-    gameEnd = true;
+    gameEnd = true;    
     // for (let i = 0 ; i < tableBox.length ; i++){
     //   tableBox[i].style.cursor = 'default';
     // };
@@ -375,16 +442,65 @@ let win = () => {
 //   clic(tableBox[i]);
 // };
 
+btnBeginWindowWinner.addEventListener('click', () => {
+  modal.style.display = "none";
+  // restart.disabled = false;   
+  gameEnd = false;
+  btnGames.style.display = 'none';
+  btnStarts.style.display = 'block';
+  start.disabled = true;  
+  restart.disabled = false;  
+  if (player1Win){
+    player1 = false;
+    displayPlayer1.style.opacity = 0.3;
+    displayPlayer2.style.opacity = 1;
 
+  } else {
+    player1 = true;
+    displayPlayer1.style.opacity = 1;
+    displayPlayer2.style.opacity = 0.3;
+  };
+  console.log(player1);
+  initialParametersBegin();
+  // initializedHand();
+});
 
-
-closeWindowWinner.addEventListener('click', () => {
+btnRestartWindowWinner.addEventListener('click', () => {
   modal.style.display = "none";
   restart.disabled = false;   
   gameEnd = true;
+  btnGames.style.display = 'block';
+  btnStarts.style.display = 'none';
+  start.disabled = false;  
+  restart.disabled = true;  
+  initialParameters();
+  initializedHand();
+  victoriesPlayer1 = 0;
+  victoriesPlayer2 = 0;
+  play1.textContent = 'Player 1';
+  play2.textContent = 'Player 2';
 });
 
-closeWindowEquality.addEventListener('click', () => {
+btnBeginWindowEquality.addEventListener('click', () => {
+  modal2.style.display = "none";
+  // restart.disabled = false;   
+  gameEnd = false;
+  btnGames.style.display = 'none';
+  btnStarts.style.display = 'block';
+  start.disabled = true;  
+  restart.disabled = false;  
+  if (player1Win){
+    player1 = false;
+  } else {
+    player1 = true;
+  };
+  console.log(player1);
+  initialParametersBegin();
+  gameWinned = false;
+  // initializedHand();
+});
+
+btnRestartWindowEquality.addEventListener('click', () => {
   modal2.style.display = "none";
   restart.disabled = false;  
   // for (let i = 0 ; i < tableBox.length ; i++){
@@ -392,8 +508,18 @@ closeWindowEquality.addEventListener('click', () => {
   //   console.log(tableBox[i].disabled);
   // }; 
   gameEnd = true;
-
+  btnGames.style.display = 'block';
+  btnStarts.style.display = 'none';
+  start.disabled = false; 
+  initialParameters();
+  initializedHand();
+  victoriesPlayer1 = 0;
+  victoriesPlayer2 = 0; 
+  play1.textContent = 'Player 1';
+  play2.textContent = 'Player 2';
 });
+
+
 
 restart.addEventListener('click', () => {
   btnGames.style.display = 'block';
@@ -401,10 +527,11 @@ restart.addEventListener('click', () => {
   start.disabled = false;  
   restart.disabled = true;  
   gameEnd = true;
-  
-
   initialParameters();
   initializedHand();
+  victoriesPlayer1 = 0;
+  victoriesPlayer2 = 0;
+  
 });
 
 // // When the user clicks anywhere outside of the modal, close it
