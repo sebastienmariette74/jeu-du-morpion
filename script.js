@@ -1,5 +1,9 @@
 let btnStarts = document.getElementById('btnStarts');
 btnStarts.style.display = 'none';
+let onePlayer = true;
+
+let btnRadio1 = document.getElementById('flexRadioDefault1');
+let btnRadio2 = document.getElementById('flexRadioDefault2');
 
 // let Grid = document.getElementById('grid');
 // Grid.style.background = 'rgba(0,0,0,0.4)';
@@ -26,6 +30,12 @@ for (let i = 1 ; i <= numberRows ; i++){
 
 // creation du tableau des cases
 let tableBox = document.getElementsByClassName('box');
+console.log(tableBox);
+let tableBoxRemaining = new Array();
+for (let i = 0 ; i < tableBox.length ; i++ ){
+  tableBoxRemaining[i] = tableBox[i]; 
+};
+console.log (tableBoxRemaining);
 let tab = [];
 for (let i = 0 ; i < tableBox.length ; i++){
   tab.push(tableBox[i].id);
@@ -65,9 +75,11 @@ let minimisedGame = document.getElementById('minimisedGame');
 let maximisedGame = document.getElementById('maximisedGame');
 let player1 = true;
 let victoriesPlayer1 = 0;
+let victoriesMorpion = 0;
 let victoriesPlayer2 = 0;
 let gameInProgress = true;
 let player1Win = true;
+let morpionWin = false;
 let gameWinned = false;
 
 let initialParameters = () => {
@@ -86,8 +98,13 @@ let initialParameters = () => {
   player1 = true;
   // victoriesPlayer1 = 0;
   // victoriesPlayer2 = 0;
+
+  // réinitialisation du tableau restant
+  for (let i = 0 ; i < tableBox.length ; i++ ){
+    tableBoxRemaining[i] = tableBox[i]; 
+  };
 };
-let initialParametersBegin = () => {
+let initialParametersBegin = () => {  
   for (let i = 0 ; i < tableBox.length ; i++){
     tableBox[i].innerText = '';
     // tableBox[i].style.cursor = 'default';
@@ -98,6 +115,7 @@ let initialParametersBegin = () => {
   minimisedGameActivated = false;
   maximisedGameActivated = false;
   handNumber = 0;
+  gameWinned = false;
   // displayPlayer1.style.opacity = 0.3;
   // displayPlayer2.style.opacity = 0.3;
   // if (player1Win){
@@ -109,6 +127,11 @@ let initialParametersBegin = () => {
   // player1 = true;
   // victoriesPlayer1 = 0;
   // victoriesPlayer2 = 0;
+
+  // réinitialisation du tableau restant
+  for (let i = 0 ; i < tableBox.length ; i++ ){
+    tableBoxRemaining[i] = tableBox[i]; 
+  };
 };
 
 initialParameters();
@@ -165,10 +188,26 @@ minimisedGame.addEventListener('click', () => {
 });
 
 //
-maximisedGame.addEventListener('click', () => {
-  maximisedGameActivated = true;
-  btnGames.style.display = 'none';
-});
+// maximisedGame.addEventListener('click', () => {
+//   maximisedGameActivated = true;
+//   btnGames.style.display = 'none';
+// });
+
+// let tab2 = () => {
+//   for (i = 0 ; i < tableBoxRemaining.length ; i++){
+//     clic2(tableBoxRemaining[i]);
+//   // for (let element of tableBoxRemaining){
+//   //   clic2(tableBoxRemaining[element])
+//     console.log(tableBoxRemaining[i]);
+//   };
+// };
+
+// let clic2 = (event) => {
+//   let index = tableBoxRemaining.indexOf(event);
+//   console.log(tableBoxRemaining.indexOf(event));
+//   tableBoxRemaining.splice(index, 1);
+//   // tableBoxRemaining.push("5");
+// };
 
 let simpleGame = () => {
   for (i = 0 ; i < tableBox.length ; i++){
@@ -178,79 +217,152 @@ let simpleGame = () => {
   };
 };
 
+// fonction pour régler le temps de réponse du joueur morpion
+let boxToPlay = '';
+let timeOutResponseMorpion = '';
+let delayResponseMorpion = () => {
+  console.log('boxToPlay dans formule = ' + boxToPlay);
+  boxToPlay.innerText = "X";
+};
+let responseMorpion = ()=>{
+  timeOutResponseMorpion = window.setTimeout(delayResponseMorpion, 0);
+};
+
 let nbClic = 0;
 let force = 0;
 // fonction appelée lorsqu'on clique sur une case. Suivant le joueur, on met un rond ou une croix et on détermine le gagnant ou l'égalité.
 let clic = (event) => { 
-  start.disabled = false;  
+  start.disabled = false; 
+  // clic2(event); 
   event.addEventListener('click', (e)=>{  
+    console.log('one player debut clic = ' + onePlayer);
+    console.log('gameWinned debut clic = ' + gameWinned);
+    // console.log('box 1 = ' + box1.innerText);
+    // console.log('box 2 = ' + box2.innerText);
+    // console.log('box 3 = ' + box3.innerText);
+    // console.log('box 4 = ' + box4.innerText);
+    // console.log('box 5 = ' + box5.innerText);
+    // console.log('box 6 = ' + box6.innerText);
+    // console.log('box 7 = ' + box7.innerText);
+    // console.log('box 8 = ' + box8.innerText);
+    // console.log('box 9 = ' + box9.innerText);
+    if (event.innerText === ''){
+      let index = tableBoxRemaining.indexOf(event);
+      tableBoxRemaining.splice(index, 1);
+      // console.log(tableBoxRemaining);
+      // console.log(tableBoxRemaining.length);
+    } else {
+      tableBoxRemaining;
+      // console.log(tableBoxRemaining);
+    }
     console.log(player1);  
-    // force ++;
-    // console.log(force);
-    console.log('gameend : ' + gameEnd);
-    console.log('event.innerText : ' + event.innerText);
-    console.log('start.disabled : ' + start.disabled);    
     if (gameEnd || event.innerText !== '' || start.disabled === false){
       e.preventDefault();
     } else if (player1){
       handNumber ++;
       nbClic ++;
-      console.log('handnumber P1:' + handNumber);
-      console.log('nbClic P1:' + nbClic);
-      console.log('premier clic');
       event.innerText = "O"; 
       win();
       messageEquality();
-      player1 = false;
       whoPlay();
-      displayPlayer2.style.opacity = 1;
-      displayPlayer1.style.opacity = 0.3;
+      if (onePlayer){
+        displayPlayer1.style.opacity = 1;
+        displayPlayer2.style.opacity = 0.3;  
+      } else {
+        displayPlayer2.style.opacity = 1;
+        displayPlayer1.style.opacity = 0.3;  
+      };
+      player1 = false;
+      // console.log('gameWinned = ' + gameWinned);
+      if (onePlayer && tableBoxRemaining.length > 1 && gameWinned === false){
+        handNumber ++;
+        player1 = false;
+
+        let numberBoxRemaining = tableBoxRemaining.length;
+        // console.log('box restantes  = ' + tableBoxRemaining.length);
+        let randomNumber = function() {
+          return Math.floor(Math.random() * (numberBoxRemaining-1));
+        };        
+        // console.log(randomNumber());
+        let nb = randomNumber();
+        // console.log('nombre aleatoire = ' + nb);
+        boxToPlay = tableBoxRemaining[nb];
+        // console.log(boxToPlay);
+        // responseMorpion();
+        // console.log('reponse 1');
+        boxToPlay.innerText = "X";
+        tableBoxRemaining.splice(nb, 1);
+        // console.log('one player = ' + onePlayer);
+        // console.log('box restantes  = ' + tableBoxRemaining.length);
+        // console.log(tableBoxRemaining);
+        // console.log('player1 = ' + player1);
+        // console.log('box 1 = ' + box1.innerText);
+        // console.log('box 2 = ' + box2.innerText);
+        // console.log('box 3 = ' + box3.innerText);
+        // console.log('box 4 = ' + box4.innerText);
+        // console.log('box 5 = ' + box5.innerText);
+        // console.log('box 6 = ' + box6.innerText);
+        // console.log('box 7 = ' + box7.innerText);
+        // console.log('box 8 = ' + box8.innerText);
+        // console.log('box 9 = ' + box9.innerText);
+        win();
+        messageEquality();
+        whoPlay();
+        player1 = true;
+      } else if (onePlayer && !gameWinned && handNumber < 9){
+        handNumber ++;
+        player1 = false;
+        boxToPlay = tableBoxRemaining[0];
+        responseMorpion();
+        console.log('reponse 2');
+
+        // player1 = true;
+        win();
+        messageEquality();
+        whoPlay();
+        player1 = true;
+      }
     } else {
       handNumber ++;
       nbClic ++;
-      console.log('handnumber P2:' + handNumber);
-      console.log('nbClic P2:' + nbClic);
+      // console.log('handnumber P2:' + handNumber);
+      // console.log('nbClic P2:' + nbClic);
       event.innerText = "X"; 
       win();
       messageEquality();
-      player1 = true;
       whoPlay();
       displayPlayer2.style.opacity = 0.3;
       displayPlayer1.style.opacity = 1;
+      player1 = true;
     };
+    // win();
+
+    // console.log('handnumber = ' + handNumber);
+    // console.log('box 1 = ' + box1.innerText);
+    // console.log('box 2 = ' + box2.innerText);
+    // console.log('box 3 = ' + box3.innerText);
+    // console.log('box 4 = ' + box4.innerText);
+    // console.log('box 5 = ' + box5.innerText);
+    // console.log('box 6 = ' + box6.innerText);
+    // console.log('box 7 = ' + box7.innerText);
+    // console.log('box 8 = ' + box8.innerText);
+    // console.log('box 9 = ' + box9.innerText);
   });
-  // event.addEventListener('click', ()=>{
-  //   if (player1){
-  //     handNumber ++;
-  //     event.innerText = "O"; 
-  //     win();
-  //     messageEquality();
-  //     player1 = false;
-  //     whoPlay();
-  //     displayPlayer2.style.opacity = 1;
-  //     displayPlayer1.style.opacity = 0.3;
-  //   } else {
-  //     handNumber++;
-  //     event.innerText = "X";
-  //     win();
-  //     messageEquality();
-  //     player1 = true;
-  //     whoPlay();
-  //     displayPlayer2.style.opacity = 0.3;
-  //     displayPlayer1.style.opacity = 1;
-  //   };
-  // });
 };
 
 let firstGame = true;
 
 start.addEventListener('click', (event) => {
   // gameEnd = false;
+  if (onePlayer){
+    play2.innerText = "morpion";
+  };
   if ((minimisedGameActivated && firstGame) || (maximisedGameActivated && firstGame) ){
     // console.log(start.disabled);
     // console.log(restart.disabled);
     // console.log(tableBox);
     simpleGame();
+    // tab2();
     // console.log(tableBox);
     console.log('if start');
     displayTableClear();
@@ -278,7 +390,19 @@ start.addEventListener('click', (event) => {
 // ouvre la fenêtre demandant les noms des joueurs
 maximisedGame.addEventListener('click', () => {
   modal1.style.display = 'block';
-  btnGames.style.display = 'block';
+  namePlayer2.style.display = 'none';
+  firstPlayer.style.display = 'none';  
+  btnRadio2.addEventListener('click', () => {
+    namePlayer2.style.display = 'block';
+    firstPlayer.style.display = 'block';
+  });
+  btnRadio1.addEventListener('click', () => {
+    namePlayer2.style.display = 'none';
+    firstPlayer.style.display = 'none';
+
+  });
+
+  // btnGames.style.display = 'block';
   maximisedGameActivated = true;
   // btnStarts.style.display = 'block';
 });
@@ -290,13 +414,27 @@ maximisedGame.addEventListener('click', () => {
 
 // bouton valider de la fenêtre d'entrée - les joueurs donnent leur nom, choisissent qui commence
 btn1.addEventListener('click', () => {
+  
+  
   let namePlayer1 = document.getElementById('namePlayer1');
   play1.textContent = namePlayer1.value;
   let namePlayer2 = document.getElementById('namePlayer2');
-  play2.textContent = namePlayer2.value; 
+  if (btnRadio1.checked){
+    console.log(btnRadio1.checked);
+    play2.textContent = "morpion";
+  } else {
+    play2.textContent = namePlayer2.value;
+  };
+  // play2.textContent = namePlayer2.value; 
   let playerBegin = firstPlayer.options[firstPlayer.selectedIndex].value;
+  namePlayer2.style.display = 'none';
+  
+  // console.log(btnRadio1.checked);
+  // if (btnRadio1.checked ){
+  //   namePlayer2.style.display = 'none';
+  // }
   console.log(playerBegin); 
-  if (playerBegin === "player1"){
+  if (playerBegin === "player1" || btnRadio1.checked){
     hand1.innerText = 'O';
     hand2.innerText = '';
     player1 = true;  
@@ -317,6 +455,8 @@ btn1.addEventListener('click', () => {
   // hand1.innerText = 'O';
   // play1.style.opacity = 1;
   gameEnd = false;
+  btnRadio1.checked = true;
+  player1 = true;
 });
 
 // lorsque le joueur 1 entre son nom, ce dernier s'ajoute à la liste select
@@ -329,19 +469,27 @@ namePlayer2.addEventListener('change', () => {
 });
 
 // affiche une icone en face du joueur qui a la main
-let whoPlay = () => {
-  if (player1){
+let whoPlay = () => {  
+  console.log("player 1 whoplay = " + player1);
+  console.log('oneplayer whoplay = ' + onePlayer);
+  if (onePlayer){
     hand1.innerText = 'O';
     hand2.innerText = '';
+  } else if (player1){
+    
+    hand1.innerText = '';
+    hand2.innerText = 'X';
     
   } else {
-    hand2.innerText = 'X';
-    hand1.innerText = '';
+    hand1.innerText = 'O';
+    hand2.innerText = '';
   }
-}
+};
 
 // ouvre la fenêtre annoncant le vainqueur
 let messageWinner = () => {
+  // console.log('player1 message winner = ' + player1);
+  // console.log('onePlayer = ' + onePlayer);
   if (player1){
     victoriesPlayer1 ++;
     displayPlayer2.style.opacity = 0.3;
@@ -351,33 +499,49 @@ let messageWinner = () => {
     // let texte = document.createTextNode("Bravo Player 1, vous avez gagné la partie !!!");
     // bloc.appendChild(texte);
     // modalContent.prepend(bloc);
-    if (victoriesPlayer1 > victoriesPlayer2){
-      messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \nvous menez " + victoriesPlayer1 + " à " + victoriesPlayer2;
-    } else if (victoriesPlayer1 < victoriesPlayer2){
-      messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \n" + play2.innerText + " mène " + victoriesPlayer2 + " à " + victoriesPlayer1;
+    if (onePlayer){
+      if (victoriesPlayer1 > victoriesMorpion){
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \nvous menez " + victoriesPlayer1 + " à " + victoriesMorpion;
+      } else if (victoriesPlayer1 < victoriesMorpion){
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \n" + play2.innerText + " mène " + victoriesMorpion + " à " + victoriesPlayer1;
+      } else {
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \nVous êtes à " + victoriesPlayer1 + " partout P1.";
+      };
     } else {
-      messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \nVous êtes à " + victoriesPlayer1 + " partout.";
-    };
-    
+      if (victoriesPlayer1 > victoriesPlayer2){
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \nvous menez " + victoriesPlayer1 + " à " + victoriesPlayer2;
+      } else if (victoriesPlayer1 < victoriesPlayer2){
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \n" + play2.innerText + " mène " + victoriesPlayer2 + " à " + victoriesPlayer1;
+      } else {
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \nVous êtes à " + victoriesPlayer1 + " partout P1.";
+      };
+    }    
     modal.style.display = 'block';
     start.disabled = true;  
     restart.disabled = true; 
     player1Win = true;
     gameWinned = true;
-    // gameEnd = true;
-    // for (let i = 0 ; i < tableBox.length ; i++){
-    //   tableBox[i].style.cursor = 'default';
-    // };
+    // gameEnd = true;   
+  } else if (onePlayer){    
+    victoriesMorpion ++;
+    displayPlayer2.style.opacity = 0.3;
+    displayPlayer1.style.opacity = 0.3;
+    modal.style.display = 'block';
+    if (victoriesMorpion > victoriesPlayer1){
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!! \nvous menez " + victoriesMorpion + " à " + victoriesPlayer1 + '.';
+    } else if (victoriesMorpion < victoriesPlayer1){
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!! \n" + play1.innerText + " mène " + victoriesPlayer1 + " à " + victoriesMorpion + '.';;
+    } else {
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!! \nVous êtes à " + victoriesPlayer1 + " manche(s) partout.";
+    };
+    start.disabled = true;  
+    restart.disabled = true; 
+    morpionWin = true;
+    gameWinned = true;
   } else {
     victoriesPlayer2 ++;
     displayPlayer2.style.opacity = 0.3;
     displayPlayer1.style.opacity = 0.3;
-    // let bloc = document.createElement('div');
-    // bloc.id = 'bloc';  
-    // let texte = document.createTextNode("Bravo Player 2, vous avez gagné la partie !!!");
-    // bloc.appendChild(texte);
-    // modalContent.prepend(bloc);
-    // messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!!";
     if (victoriesPlayer2 > victoriesPlayer1){
       messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!! \nvous menez " + victoriesPlayer2 + " à " + victoriesPlayer1 + '.';
     } else if (victoriesPlayer2 < victoriesPlayer1){
@@ -399,13 +563,13 @@ let messageWinner = () => {
 
 // ouvre la fenêtre d'égalité
 let messageEquality = () => {
-  console.log('handNumber = ' + handNumber);
-  console.log('gameWinned = ' + gameWinned);
-  if (handNumber === 9 /*&& gameWinned === false*/){
+  // console.log('handNumber = ' + handNumber);
+  // console.log('gameWinned = ' + gameWinned);
+  if (handNumber === 9 && gameWinned === false){
     equality.innerText = "Pas de gagnant !!!";
     modal2.style.display = 'block';
     start.disabled = true;    
-    gameEnd = true;    
+    gameEnd = true;      
     // for (let i = 0 ; i < tableBox.length ; i++){
     //   tableBox[i].style.cursor = 'default';
     // };
@@ -449,12 +613,15 @@ btnBeginWindowWinner.addEventListener('click', () => {
   btnGames.style.display = 'none';
   btnStarts.style.display = 'block';
   start.disabled = true;  
-  restart.disabled = false;  
-  if (player1Win){
+  restart.disabled = false; 
+  if (onePlayer){
+    player1 = true;
+    displayPlayer1.style.opacity = 1;
+    displayPlayer2.style.opacity = 0.3;  
+  } else if (player1Win){
     player1 = false;
     displayPlayer1.style.opacity = 0.3;
     displayPlayer2.style.opacity = 1;
-
   } else {
     player1 = true;
     displayPlayer1.style.opacity = 1;
@@ -489,7 +656,9 @@ btnBeginWindowEquality.addEventListener('click', () => {
   btnStarts.style.display = 'block';
   start.disabled = true;  
   restart.disabled = false;  
-  if (player1Win){
+  if (onePlayer){
+    player1 = true;      
+  } else if (player1Win){
     player1 = false;
   } else {
     player1 = true;
@@ -519,8 +688,6 @@ btnRestartWindowEquality.addEventListener('click', () => {
   play2.textContent = 'Player 2';
 });
 
-
-
 restart.addEventListener('click', () => {
   btnGames.style.display = 'block';
   btnStarts.style.display = 'none';
@@ -547,4 +714,10 @@ restart.addEventListener('click', () => {
 //   console.log(typeof(tableBox[i]));
 
 // }; 
+
+
+// console.log(tableBox);
+// console.log(tableBoxRemaining);
+// console.log(tableBoxRemaining[1]);
+// console.log(tab);
 
