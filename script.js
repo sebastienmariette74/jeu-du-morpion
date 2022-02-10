@@ -1,6 +1,8 @@
 let btnStarts = document.getElementById('btnStarts');
 btnStarts.style.display = 'none';
 let onePlayer = true;
+let easyGame = false
+let hardGame = true;
 
 let btnRadio1 = document.getElementById('flexRadioDefault1');
 let btnRadio2 = document.getElementById('flexRadioDefault2');
@@ -28,20 +30,81 @@ for (let i = 1 ; i <= numberRows ; i++){
   };
 };
 
+
+// expected output: true
 // creation du tableau des cases
 let tableBox = document.getElementsByClassName('box');
-console.log(tableBox);
+let box1 = document.getElementById('box1');
+let box2 = document.getElementById('box2');
+let box3 = document.getElementById('box3');
+let box4 = document.getElementById('box4');
+let box5 = document.getElementById('box5');
+let box6 = document.getElementById('box6');
+let box7 = document.getElementById('box7');
+let box8 = document.getElementById('box8');
+let box9 = document.getElementById('box9');
+// let exemple = [box1];
+// console.log(exemple);
+
+// copie du tableau des cases
 let tableBoxRemaining = new Array();
 for (let i = 0 ; i < tableBox.length ; i++ ){
   tableBoxRemaining[i] = tableBox[i]; 
 };
-console.log (tableBoxRemaining);
+// console.log (tableBoxRemaining);
 let tab = [];
 for (let i = 0 ; i < tableBox.length ; i++){
   tab.push(tableBox[i].id);
 };
-// console.log(tableBox);
-// console.log(tab);
+
+// création du tableau des combinaisons gagnantes
+let tableWinningCombinations = [
+  [tableBox[0], tableBox[1],tableBox[2]],
+  [tableBox[3], tableBox[4],tableBox[5]],
+  [tableBox[6], tableBox[7],tableBox[8]],
+  [tableBox[0], tableBox[3],tableBox[6]],
+  [tableBox[1], tableBox[4],tableBox[7]],
+  [tableBox[2], tableBox[5],tableBox[8]],
+  [tableBox[0], tableBox[4],tableBox[8]],
+  [tableBox[2], tableBox[4],tableBox[6]],
+];
+let copyTableCombinations = new Array();
+for (let i = 0 ; i < tableWinningCombinations.length ; i++ ){
+  copyTableCombinations[i] = tableWinningCombinations[i]; 
+};
+
+// console.log(tableWinningCombinations[0][0]);
+// console.log(typeof(tableWinningCombinations));
+let tableBoxPlayer1 = [box1];
+console.log(tableBoxPlayer1);
+let tableBoxMorpion = [box5];
+let tablePossibleCombinations = [];
+console.log()
+
+// for (let i = 0; i < copyTableCombinations.length ; i++){
+//   for (let j = 0; j < copyTableCombinations[i].length ; j++){
+//     for (let element of tableBoxPlayer1){
+//       if (copyTableCombinations[i].includes(element)){
+//         tablePossibleCombinations.push(tableWinningCombinations[i]);
+//         let index = copyTableCombinations[i].indexOf(element);
+//         console.log(index);
+//         copyTableCombinations[i].splice(index, 1);       
+//         // console.log ('ok' + ' ' + [i] + ' ' + [j]);
+//       };      
+//       // else {
+//       //   console.log ('bad' + ' ' + [i] + ' ' + [j]);
+//       // };
+//       // console.log (tablePossibleCombinations);
+//       // break;      
+//     };
+//   };
+// };
+
+// console.log (tablePossibleCombinations);
+// console.log (copyTableCombinations);
+
+
+
 
 
 let start = document.getElementById('start');
@@ -127,6 +190,9 @@ let initialParametersBegin = () => {
   // player1 = true;
   // victoriesPlayer1 = 0;
   // victoriesPlayer2 = 0;
+
+  tableBoxPlayer1 = [];
+  tableBoxMorpion = [];
 
   // réinitialisation du tableau restant
   for (let i = 0 ; i < tableBox.length ; i++ ){
@@ -249,19 +315,17 @@ let clic = (event) => {
     if (event.innerText === ''){
       let index = tableBoxRemaining.indexOf(event);
       tableBoxRemaining.splice(index, 1);
-      // console.log(tableBoxRemaining);
-      // console.log(tableBoxRemaining.length);
     } else {
       tableBoxRemaining;
-      // console.log(tableBoxRemaining);
-    }
-    console.log(player1);  
+    };
     if (gameEnd || event.innerText !== '' || start.disabled === false){
       e.preventDefault();
     } else if (player1){
       handNumber ++;
       nbClic ++;
       event.innerText = "O"; 
+      tableBoxPlayer1.push(event); /* on créé un tableau des cases jouées par Player 1 */
+      console.log(tableBoxPlayer1);
       win();
       messageEquality();
       whoPlay();
@@ -273,43 +337,26 @@ let clic = (event) => {
         displayPlayer1.style.opacity = 0.3;  
       };
       player1 = false;
-      // console.log('gameWinned = ' + gameWinned);
-      if (onePlayer && tableBoxRemaining.length > 1 && gameWinned === false){
+      if (onePlayer && easyGame && tableBoxRemaining.length > 1 && gameWinned === false){
         handNumber ++;
         player1 = false;
-
-        let numberBoxRemaining = tableBoxRemaining.length;
-        // console.log('box restantes  = ' + tableBoxRemaining.length);
-        let randomNumber = function() {
+        let numberBoxRemaining = tableBoxRemaining.length; /* on récupère le nombre de cases restantes */
+        /* on cherche un nombre aléatoire pour cocher au hasard une des cases restantes */
+        let randomNumber = function() { 
           return Math.floor(Math.random() * (numberBoxRemaining-1));
         };        
-        // console.log(randomNumber());
         let nb = randomNumber();
-        // console.log('nombre aleatoire = ' + nb);
         boxToPlay = tableBoxRemaining[nb];
-        // console.log(boxToPlay);
+        tableBoxMorpion.push(boxToPlay); /* on rajoute au tableau des cases déjà jouées par morpion la case jouée */
+        // tableBoxMorpion.push(tableBoxRemaining[nb]);
         // responseMorpion();
-        // console.log('reponse 1');
-        boxToPlay.innerText = "X";
-        tableBoxRemaining.splice(nb, 1);
-        // console.log('one player = ' + onePlayer);
-        // console.log('box restantes  = ' + tableBoxRemaining.length);
-        // console.log(tableBoxRemaining);
-        // console.log('player1 = ' + player1);
-        // console.log('box 1 = ' + box1.innerText);
-        // console.log('box 2 = ' + box2.innerText);
-        // console.log('box 3 = ' + box3.innerText);
-        // console.log('box 4 = ' + box4.innerText);
-        // console.log('box 5 = ' + box5.innerText);
-        // console.log('box 6 = ' + box6.innerText);
-        // console.log('box 7 = ' + box7.innerText);
-        // console.log('box 8 = ' + box8.innerText);
-        // console.log('box 9 = ' + box9.innerText);
-        win();
-        messageEquality();
-        whoPlay();
+        boxToPlay.innerText = "X"; /* on joue la case */
+        tableBoxRemaining.splice(nb, 1); /* on enlève la case tu tableau des cases restantes */
+        win(); /* on appelle la fonction pour savoir si le joueur a gagné après avoir joué son coup */
+        messageEquality(); /* on appelle la fonction si les joueurs ont fait égalité */
+        whoPlay(); /* on détermine le prochain joueur qui commence */
         player1 = true;
-      } else if (onePlayer && !gameWinned && handNumber < 9){
+      } else if (onePlayer && easyGame && !gameWinned && handNumber < 9){
         handNumber ++;
         player1 = false;
         boxToPlay = tableBoxRemaining[0];
@@ -321,7 +368,42 @@ let clic = (event) => {
         messageEquality();
         whoPlay();
         player1 = true;
-      }
+      } else if (onePlayer && hardGame){
+        console.log (handNumber);
+        // box5.innerText = 'X';
+        handNumber ++;
+        console.log ('hardgame handnumber = ' + handNumber);
+        if (handNumber == 2){
+          if (box5.innerText === ''){
+            box5.innerText = 'X';
+          };
+
+        };
+        player1 = false;
+        
+        // for (let i = 0; i < copyTableCombinations.length ; i++){
+        //   for (let j = 0; j < copyTableCombinations[i].length ; j++){
+        //     // for (let element of tableBoxPlayer1){
+        //       if (copyTableCombinations[i].includes(event)){
+        //         tablePossibleCombinations.push(tableWinningCombinations[i]);
+        //         // let index = copyTableCombinations[i].indexOf(element);
+        //         // console.log(index);
+        //         // copyTableCombinations[i].splice(index, 1);       
+        //         // console.log ('ok' + ' ' + [i] + ' ' + [j]);
+        //       };      
+        //       // else {
+        //       //   console.log ('bad' + ' ' + [i] + ' ' + [j]);
+        //       // };
+        //       // console.log (tablePossibleCombinations);
+        //       // break;      
+        //     // };
+        //   };
+        // };
+        win();
+        messageEquality();
+        whoPlay();
+        player1 = true;
+      };
     } else {
       handNumber ++;
       nbClic ++;
@@ -335,8 +417,6 @@ let clic = (event) => {
       displayPlayer1.style.opacity = 1;
       player1 = true;
     };
-    // win();
-
     // console.log('handnumber = ' + handNumber);
     // console.log('box 1 = ' + box1.innerText);
     // console.log('box 2 = ' + box2.innerText);
@@ -349,6 +429,9 @@ let clic = (event) => {
     // console.log('box 9 = ' + box9.innerText);
   });
 };
+
+console.log (tablePossibleCombinations);
+console.log (copyTableCombinations);
 
 let firstGame = true;
 
@@ -470,8 +553,8 @@ namePlayer2.addEventListener('change', () => {
 
 // affiche une icone en face du joueur qui a la main
 let whoPlay = () => {  
-  console.log("player 1 whoplay = " + player1);
-  console.log('oneplayer whoplay = ' + onePlayer);
+  // console.log("player 1 whoplay = " + player1);
+  // console.log('oneplayer whoplay = ' + onePlayer);
   if (onePlayer){
     hand1.innerText = 'O';
     hand2.innerText = '';
@@ -708,16 +791,4 @@ restart.addEventListener('click', () => {
 //   }
 // });
 
-// for (let i = 0 ; i < tableBox.length ; i++){
-  
-//   console.log(tableBox[i]);
-//   console.log(typeof(tableBox[i]));
-
-// }; 
-
-
-// console.log(tableBox);
-// console.log(tableBoxRemaining);
-// console.log(tableBoxRemaining[1]);
-// console.log(tab);
 
