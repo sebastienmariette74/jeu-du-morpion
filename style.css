@@ -103,10 +103,10 @@ body {
   overflow: auto; 
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  text-align: center;
+  /* text-align: center; */
 }
 
-/* Modal Content/Box */
+
 .modal-content {
   /* display: flex;
   position: relative;
@@ -120,21 +120,100 @@ body {
   height: 200px; */
   /* margin: 0 auto; */
   position: absolute;
-  display: inline-block;
+  /* display: inline-block; */
   margin: auto;
+  display: flex;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   width: 50%;
-  height: 300px;
+  height: 30vh;
   background-color: rgba(255, 255, 255, 0.8);
   color: black;
+  /* text-align: center; */
+  padding: 10px;
+}
+
+.namePlayers {
+  display: flex;
+  /* flex-direction: column; */
+  /* width: 50%; */
+  justify-content: space-evenly;
+  align-items: center;
+  /* border: 1px solid rgb(206,212,218); */
+}
+
+#namePlayer2 {
+  display: inline-block;
 }
 
 .form-select {
   display: inline-block;
   width: 50%;
+  margin: 0 auto;
+  margin-top: 10px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.btn_player {
+  /* width: 30%; */
+  /* display: inline-block; */
+}
+
+.level {
+  margin: 0 auto;
+}
+
+.btn_players {
+  display: flex;
+  justify-content: space-evenly;
+  /* width: 30%; */
+  /* margin: 0 auto; */
+  /* display: inline-block; */
+}
+
+.formulaire {
+  /* width: 30%; */
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  padding: 5px;
+  /* border: 1px solid rgb(206,212,218); */
+  /* margin-left: 40%; */
+}
+
+.name_player {
+  border: 1px solid rgb(206,212,218);
+}
+
+/* .name_player:focus {
+  outline: none;
+  border: 1px red solid !important;
+} */
+/* .name_player:hover {
+  border: 1px red solid;
+} */
+
+input[type="text"]:focus {
+  box-shadow: 0 0 0 4px rgba(13, 110, 253, .4);
+  /* border: 1px red solid; */
+  outline: none;
+}
+
+label {
+  padding: 5px;
+}
+
+.btn_submit {
+  margin-top: auto;
+  text-align: end;
 }
 
 .button {

@@ -1,14 +1,18 @@
 let btnStarts = document.getElementById('btnStarts');
 btnStarts.style.display = 'none';
-let onePlayer = true;
-let easyGame = false
-let hardGame = true;
+let onePlayer = false; 
+// let firstPlayer = false;
+let easyGame = false;
+let middleGame = false;
+let hardGame = false;
+let parade = true;
 
 let btnRadio1 = document.getElementById('flexRadioDefault1');
 let btnRadio2 = document.getElementById('flexRadioDefault2');
 
 // let Grid = document.getElementById('grid');
 // Grid.style.background = 'rgba(0,0,0,0.4)';
+
 let numberRows = 3;
 let numbercols = 3;
 
@@ -30,32 +34,11 @@ for (let i = 1 ; i <= numberRows ; i++){
   };
 };
 
-
-// expected output: true
 // creation du tableau des cases
 let tableBox = document.getElementsByClassName('box');
-let box1 = document.getElementById('box1');
-let box2 = document.getElementById('box2');
-let box3 = document.getElementById('box3');
-let box4 = document.getElementById('box4');
-let box5 = document.getElementById('box5');
-let box6 = document.getElementById('box6');
-let box7 = document.getElementById('box7');
-let box8 = document.getElementById('box8');
-let box9 = document.getElementById('box9');
-// let exemple = [box1];
-// console.log(exemple);
 
 // copie du tableau des cases
-let tableBoxRemaining = new Array();
-for (let i = 0 ; i < tableBox.length ; i++ ){
-  tableBoxRemaining[i] = tableBox[i]; 
-};
-// console.log (tableBoxRemaining);
-let tab = [];
-for (let i = 0 ; i < tableBox.length ; i++){
-  tab.push(tableBox[i].id);
-};
+let tableBoxRemaining = [...tableBox];
 
 // création du tableau des combinaisons gagnantes
 let tableWinningCombinations = [
@@ -68,50 +51,21 @@ let tableWinningCombinations = [
   [tableBox[0], tableBox[4],tableBox[8]],
   [tableBox[2], tableBox[4],tableBox[6]],
 ];
-let copyTableCombinations = new Array();
-for (let i = 0 ; i < tableWinningCombinations.length ; i++ ){
-  copyTableCombinations[i] = tableWinningCombinations[i]; 
-};
 
-// console.log(tableWinningCombinations[0][0]);
-// console.log(typeof(tableWinningCombinations));
-let tableBoxPlayer1 = [box1];
-console.log(tableBoxPlayer1);
-let tableBoxMorpion = [box5];
+// création d'une copie de la table des combinaisons gagnantes
+
+let copyTableCombinations = [...tableWinningCombinations];
+
+// let tableBoxPlayer1 = [];
+let tableBoxMorpion = [];
 let tablePossibleCombinations = [];
-console.log()
-
-// for (let i = 0; i < copyTableCombinations.length ; i++){
-//   for (let j = 0; j < copyTableCombinations[i].length ; j++){
-//     for (let element of tableBoxPlayer1){
-//       if (copyTableCombinations[i].includes(element)){
-//         tablePossibleCombinations.push(tableWinningCombinations[i]);
-//         let index = copyTableCombinations[i].indexOf(element);
-//         console.log(index);
-//         copyTableCombinations[i].splice(index, 1);       
-//         // console.log ('ok' + ' ' + [i] + ' ' + [j]);
-//       };      
-//       // else {
-//       //   console.log ('bad' + ' ' + [i] + ' ' + [j]);
-//       // };
-//       // console.log (tablePossibleCombinations);
-//       // break;      
-//     };
-//   };
-// };
-
-// console.log (tablePossibleCombinations);
-// console.log (copyTableCombinations);
-
-
-
-
+let tablePossibleCombinationsPlayer1 = [];
+let tablePossibleCombinationsMorpion = [];
+let defense = false;
 
 let start = document.getElementById('start');
 let restart = document.getElementById('restart');
 restart.disabled = true;    
-// start.disabled = false;    
-// console.log(start.disabled);
 
 // initialisation de l'affichage du tableau
 let displayTableDark = () => {  
@@ -127,7 +81,7 @@ let displayTableClear = () => {
   };
 };
 
-let gameEnd = false;
+let endGame = false;
 
 let minimisedGameActivated = false;
 let maximisedGameActivated = false;
@@ -140,10 +94,11 @@ let player1 = true;
 let victoriesPlayer1 = 0;
 let victoriesMorpion = 0;
 let victoriesPlayer2 = 0;
-let gameInProgress = true;
 let player1Win = true;
 let morpionWin = false;
-let gameWinned = false;
+let namePlayer1 = document.getElementById('namePlayer1');
+let namePlayer2 = document.getElementById('namePlayer2');
+// let gameWinned = false;
 
 let initialParameters = () => {
   for (let i = 0 ; i < tableBox.length ; i++){
@@ -151,13 +106,11 @@ let initialParameters = () => {
     // tableBox[i].style.cursor = 'default';
     displayTableDark();
   };
-  // gameEnd = false;
   minimisedGameActivated = false;
   maximisedGameActivated = false;
   handNumber = 0;
   displayPlayer1.style.opacity = 0.3;
   displayPlayer2.style.opacity = 0.3;
-  // maximisedGame.disabled = true;
   player1 = true;
   // victoriesPlayer1 = 0;
   // victoriesPlayer2 = 0;
@@ -166,46 +119,47 @@ let initialParameters = () => {
   for (let i = 0 ; i < tableBox.length ; i++ ){
     tableBoxRemaining[i] = tableBox[i]; 
   };
+
+  // réinitialisation du tableau des combinaisons
+  for (let i = 0 ; i < tableWinningCombinations.length ; i++ ){
+    copyTableCombinations[i] = tableWinningCombinations[i]; 
+  };
 };
 let initialParametersBegin = () => {  
+
+  // réinitialisation de la grille
   for (let i = 0 ; i < tableBox.length ; i++){
     tableBox[i].innerText = '';
     // tableBox[i].style.cursor = 'default';
     displayTableClear();
   };
-  gameInProgress = true;
-  // gameEnd = false;
+  
   minimisedGameActivated = false;
   maximisedGameActivated = false;
   handNumber = 0;
-  gameWinned = false;
-  // displayPlayer1.style.opacity = 0.3;
-  // displayPlayer2.style.opacity = 0.3;
-  // if (player1Win){
-  //   player1 = false;
-  // } else {
-  //   player1 = true;
-  // };
-  // maximisedGame.disabled = true;
-  // player1 = true;
-  // victoriesPlayer1 = 0;
-  // victoriesPlayer2 = 0;
+  // gameWinned = false;
+  endGame = false;
 
-  tableBoxPlayer1 = [];
-  tableBoxMorpion = [];
-
+  /* réinitialisation de tous les tableaux */
+  tableWinningCombinations = [
+    [tableBox[0], tableBox[1],tableBox[2]],
+    [tableBox[3], tableBox[4],tableBox[5]],
+    [tableBox[6], tableBox[7],tableBox[8]],
+    [tableBox[0], tableBox[3],tableBox[6]],
+    [tableBox[1], tableBox[4],tableBox[7]],
+    [tableBox[2], tableBox[5],tableBox[8]],
+    [tableBox[0], tableBox[4],tableBox[8]],
+    [tableBox[2], tableBox[4],tableBox[6]],
+  ];
+  tableBoxMorpion = [];  
   // réinitialisation du tableau restant
-  for (let i = 0 ; i < tableBox.length ; i++ ){
-    tableBoxRemaining[i] = tableBox[i]; 
-  };
+  tableBoxRemaining = [...tableBox];  
+  // réinitialisation du tableau des combinaisons
+  copyTableCombinations = [...tableWinningCombinations];  
+  tablePossibleCombinationsPlayer1 = [];  
 };
 
 initialParameters();
-
-// for (let i = 0 ; i < tableBox.length ; i++){
-//   tableBox[i].disabled = true;
-//   console.log(tableBox[i].disabled);
-// };
 
 let hand1 = document.getElementById('hand1');
 let hand2 = document.getElementById('hand2');
@@ -247,10 +201,8 @@ minimisedGame.addEventListener('click', () => {
   minimisedGameActivated = true;
   btnStarts.style.display = 'block';
   btnGames.style.display = 'none';
-  gameEnd = false;
+  endGame = false;
   // start.disabled = false;  
-  // console.log(minimisedGameActivated);
-  // console.log(maximisedGameActivated);
 });
 
 //
@@ -259,27 +211,9 @@ minimisedGame.addEventListener('click', () => {
 //   btnGames.style.display = 'none';
 // });
 
-// let tab2 = () => {
-//   for (i = 0 ; i < tableBoxRemaining.length ; i++){
-//     clic2(tableBoxRemaining[i]);
-//   // for (let element of tableBoxRemaining){
-//   //   clic2(tableBoxRemaining[element])
-//     console.log(tableBoxRemaining[i]);
-//   };
-// };
-
-// let clic2 = (event) => {
-//   let index = tableBoxRemaining.indexOf(event);
-//   console.log(tableBoxRemaining.indexOf(event));
-//   tableBoxRemaining.splice(index, 1);
-//   // tableBoxRemaining.push("5");
-// };
-
 let simpleGame = () => {
   for (i = 0 ; i < tableBox.length ; i++){
     clic(tableBox[i]);
-    console.log('if simple game')
-    console.log(tableBox[i]);
   };
 };
 
@@ -287,7 +221,6 @@ let simpleGame = () => {
 let boxToPlay = '';
 let timeOutResponseMorpion = '';
 let delayResponseMorpion = () => {
-  console.log('boxToPlay dans formule = ' + boxToPlay);
   boxToPlay.innerText = "X";
 };
 let responseMorpion = ()=>{
@@ -299,33 +232,43 @@ let force = 0;
 // fonction appelée lorsqu'on clique sur une case. Suivant le joueur, on met un rond ou une croix et on détermine le gagnant ou l'égalité.
 let clic = (event) => { 
   start.disabled = false; 
-  // clic2(event); 
   event.addEventListener('click', (e)=>{  
-    console.log('one player debut clic = ' + onePlayer);
-    console.log('gameWinned debut clic = ' + gameWinned);
-    // console.log('box 1 = ' + box1.innerText);
-    // console.log('box 2 = ' + box2.innerText);
-    // console.log('box 3 = ' + box3.innerText);
-    // console.log('box 4 = ' + box4.innerText);
-    // console.log('box 5 = ' + box5.innerText);
-    // console.log('box 6 = ' + box6.innerText);
-    // console.log('box 7 = ' + box7.innerText);
-    // console.log('box 8 = ' + box8.innerText);
-    // console.log('box 9 = ' + box9.innerText);
+    
     if (event.innerText === ''){
       let index = tableBoxRemaining.indexOf(event);
       tableBoxRemaining.splice(index, 1);
     } else {
       tableBoxRemaining;
     };
-    if (gameEnd || event.innerText !== '' || start.disabled === false){
+    if (endGame || event.innerText !== '' || start.disabled === false){
       e.preventDefault();
     } else if (player1){
+      console.log(tableBoxRemaining);
+      console.log(copyTableCombinations);
+      console.log(tablePossibleCombinationsPlayer1);
       handNumber ++;
       nbClic ++;
       event.innerText = "O"; 
-      tableBoxPlayer1.push(event); /* on créé un tableau des cases jouées par Player 1 */
-      console.log(tableBoxPlayer1);
+      // tableBoxPlayer1.push(event); /* on créé un tableau des cases jouées par Player 1 */
+
+      /* actualisation des tableaux de combinaisons possibles pour le joueur 1 et de combinaisons */
+      // let j = 0;
+      for (let i = 0; i < copyTableCombinations.length ; i++){
+        if (copyTableCombinations[i].includes(event)){ /* si la case jouée est dans le tableau des combinaisons */
+          tablePossibleCombinationsPlayer1.push(copyTableCombinations[i]); /* on insère la combinaison dans le tableau des combinaisons possibles du player 1 */
+          copyTableCombinations.splice(i, 1);
+          i = 0;
+          // let index = copyTableCombinations[i].indexOf(event);
+          // copyTableCombinations.splice(index, 1);  
+        };      
+        // on réduit la taille des combinaisons possibles du joueur 1 à 2 cases
+        for (let j = 0; j < tablePossibleCombinationsPlayer1.length ; j++){
+          if (tablePossibleCombinationsPlayer1[j].includes(event)){ /* si la case jouée est dans le tableau des combinaisons possibles du joueur 1*/
+            let index = tablePossibleCombinationsPlayer1[j].indexOf(event); /* on retire la case des combinaisons possibles */
+            tablePossibleCombinationsPlayer1[j].splice(index, 1);
+          };
+        };
+      };
       win();
       messageEquality();
       whoPlay();
@@ -337,7 +280,7 @@ let clic = (event) => {
         displayPlayer1.style.opacity = 0.3;  
       };
       player1 = false;
-      if (onePlayer && easyGame && tableBoxRemaining.length > 1 && gameWinned === false){
+      if (onePlayer && easyGame && tableBoxRemaining.length > 1 && !endGame ){
         handNumber ++;
         player1 = false;
         let numberBoxRemaining = tableBoxRemaining.length; /* on récupère le nombre de cases restantes */
@@ -351,54 +294,251 @@ let clic = (event) => {
         // tableBoxMorpion.push(tableBoxRemaining[nb]);
         // responseMorpion();
         boxToPlay.innerText = "X"; /* on joue la case */
-        tableBoxRemaining.splice(nb, 1); /* on enlève la case tu tableau des cases restantes */
+        tableBoxRemaining.splice(nb, 1); /* on enlève la case du tableau des cases restantes */
         win(); /* on appelle la fonction pour savoir si le joueur a gagné après avoir joué son coup */
         messageEquality(); /* on appelle la fonction si les joueurs ont fait égalité */
         whoPlay(); /* on détermine le prochain joueur qui commence */
         player1 = true;
-      } else if (onePlayer && easyGame && !gameWinned && handNumber < 9){
+      } else if (onePlayer && easyGame && handNumber < 9 && !endGame){
         handNumber ++;
         player1 = false;
         boxToPlay = tableBoxRemaining[0];
         responseMorpion();
-        console.log('reponse 2');
-
-        // player1 = true;
         win();
         messageEquality();
         whoPlay();
         player1 = true;
-      } else if (onePlayer && hardGame){
-        console.log (handNumber);
-        // box5.innerText = 'X';
+      } else if (onePlayer && middleGame && !endGame){
         handNumber ++;
-        console.log ('hardgame handnumber = ' + handNumber);
-        if (handNumber == 2){
+
+        /* pour le premier coup de morpion, si la case du milieu est vide, il la joue sinon ce sera un coup aléatoire */
+        if (handNumber === 2){ 
+          console.log('cas1');
+          console.log(tableBoxRemaining);
+            console.log(copyTableCombinations);
+            console.log(tablePossibleCombinationsPlayer1);
           if (box5.innerText === ''){
-            box5.innerText = 'X';
+            boxToPlay = box5;
+            boxToPlay.innerText = 'X';
+
+            /* actualisation du tableau des combinaisons possibles pour le joueur 1 */
+            for (let i = 0; i < tablePossibleCombinationsPlayer1.length ; i++){
+              if (tablePossibleCombinationsPlayer1[i].includes(boxToPlay)){ /* si la case jouée est dans le tableau des combinaisons possibles du joueur 1*/
+                tablePossibleCombinationsPlayer1.splice(i, 1); /* on retire la combinaison du tableau des combinaisons possibles du player 1 */
+                // let index = copyTableCombinations[i].indexOf(event);
+                // copyTableCombinations.splice(index, 1);           
+              };
+            };    
+            
+            /* actualisation du tableau des cases restantes */
+            let index = tableBoxRemaining.indexOf(box5);
+            tableBoxRemaining.splice(index, 1);
+
+          } else {
+            console.log('cas2');
+            console.log(tableBoxRemaining);
+            console.log(copyTableCombinations);
+            console.log(tablePossibleCombinationsPlayer1);
+            let numberBoxRemaining = tableBoxRemaining.length; /* on récupère le nombre de cases restantes */
+            /* on cherche un nombre aléatoire pour cocher au hasard une des cases restantes */
+            let randomNumber = function() { 
+              return Math.floor(Math.random() * (numberBoxRemaining-1));
+            };        
+            let nb = randomNumber();
+            boxToPlay = tableBoxRemaining[nb];
+            // tableBoxMorpion.push(boxToPlay); /* on rajoute au tableau des cases déjà jouées par morpion la case jouée */
+            // tableBoxMorpion.push(tableBoxRemaining[nb]);
+            // responseMorpion();
+            boxToPlay.innerText = "X"; /* on joue la case */
+            tableBoxRemaining.splice(nb, 1); /* on enlève la case du tableau des cases restantes */
+
+            /* actualisation du tableau des combinaisons possibles pour le joueur 1 */
+            for (let i = 0; i < tablePossibleCombinationsPlayer1.length ; i++){
+              if (tablePossibleCombinationsPlayer1[i].includes(boxToPlay)){ /* si la case jouée est dans le tableau des combinaisons possibles du joueur 1*/
+
+                tablePossibleCombinationsPlayer1.splice(i, 1); /* on retire la combinaison du tableau des combinaisons possibles du player 1 */
+                // let index = copyTableCombinations[i].indexOf(event);
+                // copyTableCombinations.splice(index, 1);          
+              };
+            };      
+          };   
+
+          /* actualisation du tableau des cases jouées par Morpion */
+          tableBoxMorpion.push(boxToPlay);
+
+          /* actualisation du tableau des combinaisons possibles pour le joueur 1 */
+          for (let j = 0; j < tablePossibleCombinationsPlayer1.length ; j++){
+            if (tablePossibleCombinationsPlayer1[j].includes(boxToPlay)){ /* si la case jouée est dans le tableau des combinaisons possibles du joueur 1*/
+              let index = [j]; /* on retire la case des combinaisons possibles */
+              tablePossibleCombinationsPlayer1.splice(index, 1);
+            };
+          };
+          
+        } else if (tablePossibleCombinationsPlayer1 != ''){
+          console.log('cas3');
+          console.log(tableBoxRemaining);
+          console.log(copyTableCombinations);
+          console.log(tablePossibleCombinationsPlayer1);
+          defense = false;
+          parade = true;
+
+          // on contre le joueur 1 s'il a 2 cases sur 3.
+          for (let i = 0 ; i < tablePossibleCombinationsPlayer1.length ; i++){ /* dans le tableau des combinaisons possibles du joueur 1 */
+            if (tablePossibleCombinationsPlayer1[i].length === 1 /*&& parade*/){  /* si le tableau a une seule valeur */
+              boxToPlay = tablePossibleCombinationsPlayer1[i][0]; /* on joue la case du tableau correspondant */ 
+              boxToPlay.innerText = 'X';
+              defense = true;
+              let index = tableBoxRemaining.indexOf(boxToPlay);
+              tableBoxRemaining.splice(index, 1);
+              parade = false;   
+            };
+            if (tablePossibleCombinationsPlayer1[i].includes(boxToPlay)){ /* si la case jouée est dans le tableau des combinaisons possibles du joueur 1*/
+              let index = [i]; /* on retire la case des combinaisons possibles */
+              tablePossibleCombinationsPlayer1.splice(index, 1);
+            };  
           };
 
-        };
+          if (defense === false){
+            console.log('cas4');
+            console.log(tableBoxRemaining);
+            console.log(copyTableCombinations);
+            console.log(tablePossibleCombinationsPlayer1);
+            let numberBoxRemaining = tableBoxRemaining.length; /* on récupère le nombre de cases restantes */
+              /* on cherche un nombre aléatoire pour cocher au hasard une des cases restantes */
+              let randomNumber = function() { 
+                return Math.floor(Math.random() * (numberBoxRemaining-1));
+              };        
+              let nb = randomNumber();
+              boxToPlay = tableBoxRemaining[nb];
+              // tableBoxMorpion.push(boxToPlay); /* on rajoute au tableau des cases déjà jouées par morpion la case jouée */
+              // tableBoxMorpion.push(tableBoxRemaining[nb]);
+              // responseMorpion();
+              boxToPlay.innerText = "X"; /* on joue la case */
+              tableBoxRemaining.splice(nb, 1); /* on enlève la case tu tableau des cases restantes */
+          };
+
+          /* actualisation du tableau des cases jouées par Morpion */
+          tableBoxMorpion.push(boxToPlay);
+
+          /* actualisation du tableau des combinaisons possibles pour le joueur 1 */
+          for (let i = 0 ; i < tableBoxMorpion.length ; i++){
+            for (let j = 0 ; j < tablePossibleCombinationsPlayer1.length ; j++){
+              if (tablePossibleCombinationsPlayer1[j].includes(tableBoxMorpion[i])){
+                let index = [j]; /* on retire la case des combinaisons possibles */
+                tablePossibleCombinationsPlayer1.splice(index, 1);
+              };
+            };
+          };
+        } ;        
+
         player1 = false;
-        
-        // for (let i = 0; i < copyTableCombinations.length ; i++){
-        //   for (let j = 0; j < copyTableCombinations[i].length ; j++){
-        //     // for (let element of tableBoxPlayer1){
-        //       if (copyTableCombinations[i].includes(event)){
-        //         tablePossibleCombinations.push(tableWinningCombinations[i]);
-        //         // let index = copyTableCombinations[i].indexOf(element);
-        //         // console.log(index);
-        //         // copyTableCombinations[i].splice(index, 1);       
-        //         // console.log ('ok' + ' ' + [i] + ' ' + [j]);
-        //       };      
-        //       // else {
-        //       //   console.log ('bad' + ' ' + [i] + ' ' + [j]);
-        //       // };
-        //       // console.log (tablePossibleCombinations);
-        //       // break;      
-        //     // };
-        //   };
-        // };
+        win();
+        messageEquality();
+        whoPlay();
+        player1 = true;
+      } else if (onePlayer && hardGame && !endGame){
+        handNumber ++;
+
+        /* pour le premier coup de morpion, si la case du milieu est vide, il la joue sinon ce sera un coup aléatoire */
+        if (handNumber === 2){ 
+          if (box5.innerText === ''){
+            boxToPlay = box5;
+            boxToPlay.innerText = 'X';
+
+            /* actualisation du tableau des combinaisons possibles pour le joueur 1 */
+            for (let i = 0; i < tablePossibleCombinationsPlayer1.length ; i++){
+              if (tablePossibleCombinationsPlayer1[i].includes(boxToPlay)){ /* si la case jouée est dans le tableau des combinaisons possibles du joueur 1*/
+                tablePossibleCombinationsPlayer1.splice(i, 1); /* on retire la combinaison du tableau des combinaisons possibles du player 1 */
+                // let index = copyTableCombinations[i].indexOf(event);
+                // copyTableCombinations.splice(index, 1);           
+              };
+            };      
+
+
+          } else {
+            let numberBoxRemaining = tableBoxRemaining.length; /* on récupère le nombre de cases restantes */
+            /* on cherche un nombre aléatoire pour cocher au hasard une des cases restantes */
+            let randomNumber = function() { 
+              return Math.floor(Math.random() * (numberBoxRemaining-1));
+            };        
+            let nb = randomNumber();
+            boxToPlay = tableBox[0];
+            boxToPlay.innerText = "X"; /* on joue la case */
+            tableBoxRemaining.splice(0, 1); /* on enlève la case du tableau des cases restantes */
+            console.log(tableBoxRemaining);
+            /* actualisation du tableau des combinaisons possibles pour le joueur 1 */
+            for (let i = 0; i < tablePossibleCombinationsPlayer1.length ; i++){
+              if (tablePossibleCombinationsPlayer1[i].includes(boxToPlay)){ /* si la case jouée est dans le tableau des combinaisons possibles du joueur 1*/
+
+                tablePossibleCombinationsPlayer1.splice(i, 1); /* on retire la combinaison du tableau des combinaisons possibles du player 1 */
+                // let index = copyTableCombinations[i].indexOf(event);
+                // copyTableCombinations.splice(index, 1);          
+              };
+            };      
+          };   
+
+          /* actualisation du tableau des cases jouées par Morpion */
+          tableBoxMorpion.push(boxToPlay);
+
+          /* actualisation du tableau des combinaisons possibles pour le joueur 1 */
+          for (let j = 0; j < tablePossibleCombinationsPlayer1.length ; j++){
+            if (tablePossibleCombinationsPlayer1[j].includes(boxToPlay)){ /* si la case jouée est dans le tableau des combinaisons possibles du joueur 1*/
+              let index = [j]; /* on retire la case des combinaisons possibles */
+              tablePossibleCombinationsPlayer1.splice(index, 1);
+            };
+          };
+          
+        } else if (tablePossibleCombinationsPlayer1 != ''){
+          defense = false;
+          parade = true;
+          // on contre le joueur 1 s'il a 2 cases sur 3.
+          for (let i = 0 ; i < tablePossibleCombinationsPlayer1.length ; i++){ /* dans le tableau des combinaisons possibles du joueur 1 */
+            
+            if (tablePossibleCombinationsPlayer1[i].length === 1 && parade){  /* si le tableau a une seule valeur */
+              boxToPlay = tablePossibleCombinationsPlayer1[i][0]; /* on joue la case du tableau correspondant */ 
+              boxToPlay.innerText = 'X';
+              defense = true;
+              let index = tableBoxRemaining.indexOf(boxToPlay);
+              tableBoxRemaining.splice(index, 1);
+              parade = false;   
+            };
+            if (tablePossibleCombinationsPlayer1[i].includes(boxToPlay)){ /* si la case jouée est dans le tableau des combinaisons possibles du joueur 1*/
+              let index = [i]; /* on retire la case des combinaisons possibles */
+              tablePossibleCombinationsPlayer1.splice(index, 1);
+            };  
+
+          };
+
+          if (defense === false){
+            let numberBoxRemaining = tableBoxRemaining.length; /* on récupère le nombre de cases restantes */
+              /* on cherche un nombre aléatoire pour cocher au hasard une des cases restantes */
+              let randomNumber = function() { 
+                return Math.floor(Math.random() * (numberBoxRemaining-1));
+              };        
+              let nb = randomNumber();
+              boxToPlay = tableBoxRemaining[nb];
+              // tableBoxMorpion.push(boxToPlay); /* on rajoute au tableau des cases déjà jouées par morpion la case jouée */
+              // tableBoxMorpion.push(tableBoxRemaining[nb]);
+              // responseMorpion();
+              boxToPlay.innerText = "X"; /* on joue la case */
+              tableBoxRemaining.splice(nb, 1); /* on enlève la case tu tableau des cases restantes */
+          };
+
+          /* actualisation du tableau des cases jouées par Morpion */
+          tableBoxMorpion.push(boxToPlay);
+
+          /* actualisation du tableau des combinaisons possibles pour le joueur 1 */
+          for (let i = 0 ; i < tableBoxMorpion.length ; i++){
+            for (let j = 0 ; j < tablePossibleCombinationsPlayer1.length ; j++){
+              if (tablePossibleCombinationsPlayer1[j].includes(tableBoxMorpion[i])){
+                let index = [j]; /* on retire la case des combinaisons possibles */
+                tablePossibleCombinationsPlayer1.splice(index, 1);
+              };
+            };
+          };
+        } ;        
+
+        player1 = false;
         win();
         messageEquality();
         whoPlay();
@@ -407,8 +547,6 @@ let clic = (event) => {
     } else {
       handNumber ++;
       nbClic ++;
-      // console.log('handnumber P2:' + handNumber);
-      // console.log('nbClic P2:' + nbClic);
       event.innerText = "X"; 
       win();
       messageEquality();
@@ -417,37 +555,21 @@ let clic = (event) => {
       displayPlayer1.style.opacity = 1;
       player1 = true;
     };
-    // console.log('handnumber = ' + handNumber);
-    // console.log('box 1 = ' + box1.innerText);
-    // console.log('box 2 = ' + box2.innerText);
-    // console.log('box 3 = ' + box3.innerText);
-    // console.log('box 4 = ' + box4.innerText);
-    // console.log('box 5 = ' + box5.innerText);
-    // console.log('box 6 = ' + box6.innerText);
-    // console.log('box 7 = ' + box7.innerText);
-    // console.log('box 8 = ' + box8.innerText);
-    // console.log('box 9 = ' + box9.innerText);
+    console.log('final');
+              console.log(tableBoxRemaining);
+              console.log(copyTableCombinations);
+              console.log(tablePossibleCombinationsPlayer1);
   });
 };
-
-console.log (tablePossibleCombinations);
-console.log (copyTableCombinations);
 
 let firstGame = true;
 
 start.addEventListener('click', (event) => {
-  // gameEnd = false;
   if (onePlayer){
     play2.innerText = "morpion";
   };
   if ((minimisedGameActivated && firstGame) || (maximisedGameActivated && firstGame) ){
-    // console.log(start.disabled);
-    // console.log(restart.disabled);
-    // console.log(tableBox);
     simpleGame();
-    // tab2();
-    // console.log(tableBox);
-    console.log('if start');
     displayTableClear();
     start.disabled = true;  
     if (player1){
@@ -455,20 +577,18 @@ start.addEventListener('click', (event) => {
       play1.style.opacity = 1;
     };
     firstGame = false;
-    // for (let i = 0 ; i < tableBox.length ; i++){
-    //   tableBox[i].style.cursor = 'pointer';
-    // };
-    // console.log(start.disabled);
-    // console.log(restart.disabled);
   } else {
     displayTableClear();
     hand1.innerText = 'O';
     play1.style.opacity = 1;
     start.disabled = true;
     event.preventDefault();
-    console.log('else');
-  }
+  };
 });
+
+let level = document.getElementById('level');
+let easyLevel = document.getElementById('easyLevel');
+let middleLevel = document.getElementById('middleLevel');
 
 // ouvre la fenêtre demandant les noms des joueurs
 maximisedGame.addEventListener('click', () => {
@@ -478,56 +598,65 @@ maximisedGame.addEventListener('click', () => {
   btnRadio2.addEventListener('click', () => {
     namePlayer2.style.display = 'block';
     firstPlayer.style.display = 'block';
+    level.style.display = 'none';
   });
   btnRadio1.addEventListener('click', () => {
     namePlayer2.style.display = 'none';
     firstPlayer.style.display = 'none';
+    level.style.display = 'block';
 
   });
-
   // btnGames.style.display = 'block';
   maximisedGameActivated = true;
   // btnStarts.style.display = 'block';
 });
-// (() => {   
-//   modal1.style.display = 'block';
-// })();
-
-// console.log(firstPlayer.value);
 
 // bouton valider de la fenêtre d'entrée - les joueurs donnent leur nom, choisissent qui commence
-btn1.addEventListener('click', () => {
-  
-  
-  let namePlayer1 = document.getElementById('namePlayer1');
+btn1.addEventListener('click', () => { 
   play1.textContent = namePlayer1.value;
-  let namePlayer2 = document.getElementById('namePlayer2');
   if (btnRadio1.checked){
-    console.log(btnRadio1.checked);
     play2.textContent = "morpion";
   } else {
     play2.textContent = namePlayer2.value;
   };
   // play2.textContent = namePlayer2.value; 
-  let playerBegin = firstPlayer.options[firstPlayer.selectedIndex].value;
-  namePlayer2.style.display = 'none';
+  let playerBegin = firstPlayer.options[firstPlayer.selectedIndex].value; /* pour connaître la valeur du bouton radio sélectionné */
+  // namePlayer2.style.display = 'none'; 
   
-  // console.log(btnRadio1.checked);
-  // if (btnRadio1.checked ){
-  //   namePlayer2.style.display = 'none';
-  // }
-  console.log(playerBegin); 
-  if (playerBegin === "player1" || btnRadio1.checked){
+  
+  
+  if (playerBegin === "player1" && btnRadio2.checked){
     hand1.innerText = 'O';
     hand2.innerText = '';
     player1 = true;  
     displayPlayer1.style.opacity = 1;
-  } else {
+    onePlayer = false;
+  } else if (playerBegin === "player2"){
     hand2.innerText = 'X';
     hand1.innerText = '';
     player1 = false;
+    onePlayer = false;
     displayPlayer2.style.opacity = 1;
+  } else if (btnRadio1.checked && easyLevel.checked === true){
+    onePlayer = true;
+    easyGame = true;
+  } else if (btnRadio1.checked && middleLevel.checked === true){
+    onePlayer = true;
+    middleGame = true;
+  } else {
+    onePlayer = true;
+    hardGame = true;
   };
+
+  console.log(easyLevel.checked);
+  console.log(onePlayer);
+  console.log(easyGame);
+  console.log(middleGame);
+  console.log(hardGame);
+  // let chosenLevel = firstPlayer.options[firstPlayer.selectedIndex].value; /* pour connaître la valeur du bouton radio sélectionné */
+
+  // if ()
+
   modal1.style.display = 'none';
   btnGames.style.display = 'none';
   // maximisedGameActivated = true;
@@ -537,9 +666,7 @@ btn1.addEventListener('click', () => {
   displayTableDark();
   // hand1.innerText = 'O';
   // play1.style.opacity = 1;
-  gameEnd = false;
-  btnRadio1.checked = true;
-  player1 = true;
+  endGame = false;
 });
 
 // lorsque le joueur 1 entre son nom, ce dernier s'ajoute à la liste select
@@ -553,8 +680,6 @@ namePlayer2.addEventListener('change', () => {
 
 // affiche une icone en face du joueur qui a la main
 let whoPlay = () => {  
-  // console.log("player 1 whoplay = " + player1);
-  // console.log('oneplayer whoplay = ' + onePlayer);
   if (onePlayer){
     hand1.innerText = 'O';
     hand2.innerText = '';
@@ -571,17 +696,10 @@ let whoPlay = () => {
 
 // ouvre la fenêtre annoncant le vainqueur
 let messageWinner = () => {
-  // console.log('player1 message winner = ' + player1);
-  // console.log('onePlayer = ' + onePlayer);
   if (player1){
     victoriesPlayer1 ++;
     displayPlayer2.style.opacity = 0.3;
     displayPlayer1.style.opacity = 0.3;
-    // let bloc = document.createElement('div');
-    // bloc.id = 'bloc';
-    // let texte = document.createTextNode("Bravo Player 1, vous avez gagné la partie !!!");
-    // bloc.appendChild(texte);
-    // modalContent.prepend(bloc);
     if (onePlayer){
       if (victoriesPlayer1 > victoriesMorpion){
         messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \nvous menez " + victoriesPlayer1 + " à " + victoriesMorpion;
@@ -603,8 +721,8 @@ let messageWinner = () => {
     start.disabled = true;  
     restart.disabled = true; 
     player1Win = true;
-    gameWinned = true;
-    // gameEnd = true;   
+    // gameWinned = true;
+    endGame = true;
   } else if (onePlayer){    
     victoriesMorpion ++;
     displayPlayer2.style.opacity = 0.3;
@@ -620,7 +738,8 @@ let messageWinner = () => {
     start.disabled = true;  
     restart.disabled = true; 
     morpionWin = true;
-    gameWinned = true;
+    // gameWinned = true;
+    endGame = true;
   } else {
     victoriesPlayer2 ++;
     displayPlayer2.style.opacity = 0.3;
@@ -636,8 +755,8 @@ let messageWinner = () => {
     start.disabled = true;    
     restart.disabled = true; 
     player1Win = false;
-    gameWinned = true;
-    // gameEnd = true;
+    // gameWinned = true;
+    endGame = true;
     // for (let i = 0 ; i < tableBox.length ; i++){
     //   tableBox[i].style.cursor = 'default';
     // };
@@ -646,16 +765,12 @@ let messageWinner = () => {
 
 // ouvre la fenêtre d'égalité
 let messageEquality = () => {
-  // console.log('handNumber = ' + handNumber);
-  // console.log('gameWinned = ' + gameWinned);
-  if (handNumber === 9 && gameWinned === false){
+  if (handNumber === 9 /*&& gameWinned === false*/){
     equality.innerText = "Pas de gagnant !!!";
     modal2.style.display = 'block';
     start.disabled = true;    
-    gameEnd = true;      
-    // for (let i = 0 ; i < tableBox.length ; i++){
-    //   tableBox[i].style.cursor = 'default';
-    // };
+    endGame = true;
+    // gameWinned = false;  
   };
 };
 
@@ -684,15 +799,10 @@ let win = () => {
   }
 };
 
-// Lorsqu'on clique sur une case du tableau, on appelle la fonction clic.
-// for (i = 0 ; i < tableBox.length ; i++){
-//   clic(tableBox[i]);
-// };
-
 btnBeginWindowWinner.addEventListener('click', () => {
   modal.style.display = "none";
-  // restart.disabled = false;   
-  gameEnd = false;
+  // gameWinned = false;
+  endGame = false;
   btnGames.style.display = 'none';
   btnStarts.style.display = 'block';
   start.disabled = true;  
@@ -710,7 +820,6 @@ btnBeginWindowWinner.addEventListener('click', () => {
     displayPlayer1.style.opacity = 1;
     displayPlayer2.style.opacity = 0.3;
   };
-  console.log(player1);
   initialParametersBegin();
   // initializedHand();
 });
@@ -718,7 +827,8 @@ btnBeginWindowWinner.addEventListener('click', () => {
 btnRestartWindowWinner.addEventListener('click', () => {
   modal.style.display = "none";
   restart.disabled = false;   
-  gameEnd = true;
+  // gameWinned = false;
+  endGame = false;
   btnGames.style.display = 'block';
   btnStarts.style.display = 'none';
   start.disabled = false;  
@@ -729,12 +839,14 @@ btnRestartWindowWinner.addEventListener('click', () => {
   victoriesPlayer2 = 0;
   play1.textContent = 'Player 1';
   play2.textContent = 'Player 2';
+  onePlayer = false;
+  easyGame = false;
+  middleGame = false;
 });
 
 btnBeginWindowEquality.addEventListener('click', () => {
   modal2.style.display = "none";
-  // restart.disabled = false;   
-  gameEnd = false;
+  endGame = false;
   btnGames.style.display = 'none';
   btnStarts.style.display = 'block';
   start.disabled = true;  
@@ -746,20 +858,14 @@ btnBeginWindowEquality.addEventListener('click', () => {
   } else {
     player1 = true;
   };
-  console.log(player1);
   initialParametersBegin();
-  gameWinned = false;
   // initializedHand();
 });
 
 btnRestartWindowEquality.addEventListener('click', () => {
   modal2.style.display = "none";
   restart.disabled = false;  
-  // for (let i = 0 ; i < tableBox.length ; i++){
-  //   tableBox[i].disabled = true;
-  //   console.log(tableBox[i].disabled);
-  // }; 
-  gameEnd = true;
+  endGame = true;
   btnGames.style.display = 'block';
   btnStarts.style.display = 'none';
   start.disabled = false; 
@@ -769,6 +875,9 @@ btnRestartWindowEquality.addEventListener('click', () => {
   victoriesPlayer2 = 0; 
   play1.textContent = 'Player 1';
   play2.textContent = 'Player 2';
+  onePlayer = false;
+  easyGame = false;
+  middleGame = false;
 });
 
 restart.addEventListener('click', () => {
@@ -776,7 +885,7 @@ restart.addEventListener('click', () => {
   btnStarts.style.display = 'none';
   start.disabled = false;  
   restart.disabled = true;  
-  gameEnd = true;
+  endGame = true;
   initialParameters();
   initializedHand();
   victoriesPlayer1 = 0;

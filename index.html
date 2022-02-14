@@ -78,30 +78,61 @@
   <div id="window-open" class="modal">  
     <div id="modalContent1" class="modal-content">    
       <!-- <span class="close">&times;</span>   -->
-      <div>
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked value="solo">
-      <label class="form-check-label" for="flexRadioDefault1">
-        1 joueur
-      </label>
+      <div class="btn_players">
+        <div id="btn1player" class="btn_player">
+          <!-- <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked value="solo"> -->
+          <input  type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked value="solo">
+          <!-- <label class="form-check-label" for="flexRadioDefault1"> -->
+          <label  for="flexRadioDefault1">
+            1 joueur
+          </label>
+        </div>
+        <div id="btn2players" class="btn_player">
+          <!-- <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="duo"> -->
+          <input  type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="duo">
+          <!-- <label class="form-check-label" for="flexRadioDefault1"> -->
+          <label  for="flexRadioDefault1">
+            2 joueurs
+          </label>
+        </div>
       </div>
-      <div>
-        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="duo">
-      <label class="form-check-label" for="flexRadioDefault1">
-        2 joueurs
-      </label>
+      <div class="namePlayers">
+        <input class="formulaire name_player" type="text" name="namePlayer1" id="namePlayer1" placeholder="Nom du Joueur 1">
+        <input class="formulaire name_player" type="text" name="namePlayer1" id="namePlayer2" placeholder="Nom du Joueur 2">
       </div>
-      <input type="text" name="namePlayer1" id="namePlayer1" placeholder="Nom du Joueur 1">
-      <input type="text" name="namePlayer1" id="namePlayer2" placeholder="Nom du Joueur 2">
+      <!-- <select id="firstPlayer" class="form-select" aria-label="Default select example"> -->
       <select id="firstPlayer" class="form-select" aria-label="Default select example">
         <option  selected>Qui veut commencer ?</option>
-        <option id="textJoueur1" value="player1">
-          <!-- Joueur 1 commence -->
-        </option>
-        <option id="textJoueur2" value="player2">
-          <!-- Joueur 2 commence -->
-        </option>
+        <option id="textJoueur1" value="player1"></option>
+        <option id="textJoueur2" value="player2"></option>
       </select>
-      <div>
+      <div id="level" class="level">
+        <div>
+          <!-- <input class="form-check-input" type="radio" name="level" id="easyLevel" checked value="easy"> -->
+          <input  type="radio" name="level" id="easyLevel" checked value="easy">
+          <!-- <label class="form-check-label" for="easyLevel"> -->
+          <label class="formulaire" for="easyLevel">
+            Niveau facile
+          </label>
+        </div>
+        <div>
+          <!-- <input class="form-check-input" type="radio" name="level" id="middleLevel" value="middle"> -->
+          <input type="radio" name="level" id="middleLevel" value="middle">
+          <!-- <label class="form-check-label" for="middleLevel"> -->
+          <label class="formulaire" for="middleLevel">
+            Niveau intermédiaire
+          </label>
+        </div>
+        <div>
+          <!-- <input class="form-check-input" type="radio" name="level" id="middleLevel" value="middle"> -->
+          <input type="radio" name="level" id="hardleLevel" value="hard">
+          <!-- <label class="form-check-label" for="middleLevel"> -->
+          <label class="formulaire" for="middleLevel">
+            Niveau difficile
+          </label>
+        </div>
+      </div>
+      <div class="btn_submit">
         <button id="btn1" class="btn btn-primary">suivant</button>
 
       </div>
