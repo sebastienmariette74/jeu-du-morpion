@@ -15,7 +15,8 @@ let btnRadio2 = document.getElementById('flexRadioDefault2');
 // Grid.style.background = 'rgba(0,0,0,0.4)';
 
 let numberRows = 3;
-let numbercols = 3;
+let numberCols = 3;
+let numberDiags = 2;
 
 // création d'une grille
 for (let i = 1 ; i <= numberRows ; i++){
@@ -27,21 +28,90 @@ for (let i = 1 ; i <= numberRows ; i++){
   createDiv.style.textAlign = 'center';
   createDiv.style.lineHeight = '150px';
   // createDiv.style.textAlign = 'center';
-  for (let j = 1 ; j <= numbercols; j++){
+  for (let j = 1 ; j <= numberCols; j++){
     let creatBox = document.createElement('div');
-    creatBox.id = 'box'+ (j + numbercols*(i-1));
+    creatBox.id = 'box'+ (j + numberCols*(i-1));
     creatBox.classList = 'box';    
     createDiv.appendChild(creatBox);    
   };
 };
 
-// creation du tableau des cases
+
+
+/* creation du tableau des cases */
 let tableBox = document.getElementsByClassName('box');
 
-// copie du tableau des cases
+/* conversion de l'objet tableBox en tableau */
+let tableBoxes = [];
+
+/* création d'autant de sous-tableaux qu'il y a de lignes */
+for (let i = 0 ; i < numberRows ; i++){
+  tableBoxes[i] = [];
+};
+
+/* répartition dans le tableau tableBoxes des différentes cases */
+for (let i = 0 ; i < tableBox.length ; i++){
+  let index = Math.floor(i / numberCols);
+  console.log(index);
+  tableBoxes[index].push(tableBox[i]);
+};
+
+/* tableau des combinaisons gagnantes horizontales */
+let tabHorizontalCombinations = [];
+for (let i = 0; i < tableBoxes.length; i++){
+  tabHorizontalCombinations.push(tableBoxes[i])
+};
+
+/* tableau des combinaisons gagnantes verticales */
+let tabVerticalCombinations = [];
+/* création d'autant de sous-tableaux qu'il y a de lignes */
+for (let i = 0 ; i < numberCols ; i++){
+  tabVerticalCombinations[i] = [];
+};
+console.log(tabVerticalCombinations);
+
+for (let i = 0; i < tableBoxes.length; i++){
+  for (let j = 0; j < tableBoxes[i].length; j++){
+    tabVerticalCombinations[j].push(tableBoxes[i][j]);
+    // if (i === j){
+    // };
+  };
+};
+
+/* tableau des combinaisons gagnantes diagonales */
+let tabDiagonalCombinations = [];
+/* création d'autant de sous-tableaux qu'il y a de diagonales */
+for (let i = 0 ; i < numberDiags ; i++){
+  tabDiagonalCombinations[i] = [];
+};
+for (let i = 0; i < tableBoxes.length; i++){
+  for (let j = 0; j < tableBoxes[i].length; j++){
+    let k = 0;
+    if (i === j){
+      tabDiagonalCombinations[k].push(tableBoxes[i][j]);
+    };
+    k++;
+    if ((i === 1 && j === 1) || (i-j ===2) || (j-i ===2)){
+      tabDiagonalCombinations[k].push(tableBoxes[i][j]);
+    };
+  };
+};
+
+/* tableau des combinaisons gagnantes */
+let concat = tabHorizontalCombinations.concat(tabVerticalCombinations).concat(tabDiagonalCombinations);
+
+
+console.log(tabHorizontalCombinations);
+console.log(tabVerticalCombinations);
+console.log(tabDiagonalCombinations);
+console.log(concat);
+
+
+
+/* copie du tableau des cases = tableau des cases restantes */
 let tableBoxRemaining = [...tableBox];
 
-// création du tableau des combinaisons gagnantes
+/* création du tableau des combinaisons gagnantes */
 let tableWinningCombinations = [
   [tableBox[0], tableBox[1],tableBox[2]],
   [tableBox[3], tableBox[4],tableBox[5]],
@@ -1104,6 +1174,7 @@ let messageEquality = () => {
 
 // ouvre la fenêtre du vainqueur s'il y a un vainqueur
 let win = () => {
+
   if (
     ((box1.innerText === 'O') && (box1.innerText === box2.innerText) && (box1.innerText === box3.innerText)) || 
     ((box4.innerText === 'O') && (box4.innerText === box5.innerText) && (box4.innerText === box6.innerText)) || 
