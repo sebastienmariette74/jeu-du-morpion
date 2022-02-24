@@ -26,7 +26,7 @@ for (let i = 1 ; i <= numberRows ; i++){
   createDiv.style.display = 'flex';
   createDiv.style.justifyContent = 'center';
   createDiv.style.textAlign = 'center';
-  createDiv.style.lineHeight = '150px';
+  // createDiv.style.lineHeight = '150px';
   // createDiv.style.textAlign = 'center';
   for (let j = 1 ; j <= numberCols; j++){
     let creatBox = document.createElement('div');
