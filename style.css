@@ -1,5 +1,5 @@
 * {
-  border : 1px solid;
+  /* border : 1px solid; */
 }
 
 body {
@@ -17,8 +17,8 @@ body {
 }
 
 .box {
-  width: calc(100vw / 3);
-  height: calc(100vw / 3);
+  width: calc((100vw - 80px) / 3);
+  height: calc((100vw - 70px) / 3);
   border-radius: 10px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
@@ -30,10 +30,11 @@ body {
   /* line-height: 150px; */
 }
 
+
 .under_grid {
   position: absolute;
-  height: 480px;
-  width: 480px;
+  height: calc(100vw - 40px);
+  width: calc(100vw - 40px);
   /*background: chocolate;
   */top: 0;
   left: 50%;
@@ -100,7 +101,7 @@ body {
   display: flex;
   justify-content: center;
   text-align: center;
-  line-height: 150px;
+  /* line-height: 150px; */
 }
 
 
