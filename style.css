@@ -4,11 +4,44 @@
 
 body {
   font-family: 'Lato', sans-serif;  
+  position: relative;
+  background : rgba(53, 194, 180, 0.13);
+  /* background: url(images/background.jpg) no-repeat center top / cover; */
+
 }
+
+/* .title::after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  opacity: 0.2;
+  background: url(images/background.jpg) no-repeat center top / cover;
+} */
 
 .title {
   text-align: center;
-  padding: 30px 0;
+  /* position: relative; */
+  /* letter-spacing: 00.2em; */
+  /* z-index: 100; */
+  padding: 20px 0;
+}
+
+h1 {
+  display: inline-block;
+  padding: 10px;
+  box-shadow: 0 5px 13px 4px grey;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  text-transform: uppercase;
+  font-size: 26px;
 }
 
 #grid {
@@ -30,13 +63,12 @@ body {
   /* line-height: 150px; */
 }
 
-
 .under_grid {
   position: absolute;
   height: calc(100vw - 40px);
   width: calc(100vw - 40px);
-  /*background: chocolate;
-  */top: 0;
+  /*background: chocolate;*/
+  top: 0;
   left: 50%;
   z-index: -1;
   transform: translatex(-50%);
@@ -44,7 +76,7 @@ body {
   -moz-transform: translatexY(-50%);
   -ms-transform: translatexY(-50%);
   -o-transform: translatexY(-50%);
-  outline: chocolate solid 20px;
+  outline: rgb(53, 194, 180) solid 20px;
   border-radius: 10px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
@@ -62,6 +94,7 @@ body {
 .displayPlayers {
   display: flex;
   flex-direction: column;
+  width: 50%;
 }
 
 #player1 {
@@ -73,10 +106,57 @@ body {
 }
 
 #start_game {
-  background: rgb(0, 17, 255);
+  background: rgb(53, 194, 180);
+  color: white;
+  letter-spacing: 0.2em;
   border: none;
 }
+.colors {
+  display: flex;
+  align-items: center;
+}
 
+.color {
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  margin: 2px;
+}
+
+.color_one {
+  background: blue;
+}
+.color_two {
+  background: red;
+}
+.color_three {
+  background: chocolate;
+}
+.color_four {
+  background: green;
+}
+.color_five {
+  background: turquoise;
+}
+.color_six {
+  background: blue;
+}
+.color_seven {
+  background: red;
+}
+.color_eight {
+  background: chocolate;
+}
+.color_nine {
+  background: green;
+}
+.color_ten {
+  background: turquoise;
+}
 
 #hand2 {
   text-align: right;
@@ -137,17 +217,17 @@ body {
   /* display: inline-block; */
   margin: auto;
   display: flex;
-  top: 25%;
+  top: 0;
   right: 0;
-  /* bottom: 0; */
-  /* left: 0; */
-  width: 30%;
-  height: 30vh;
+  bottom: 0;
+  left: 0;
+  width: 80vw;
+  height: 50vh;
   background-color: rgb(255, 255, 255);
   color: black;
   /* text-align: center; */
   padding: 10px;
-  margin-right: 20px;
+  /* margin-right: 20px; */
 }
 
 .namePlayers {
@@ -175,9 +255,14 @@ body {
   -o-border-radius: 5px;
 }
 
+.row_player {
+  display: flex;
+  justify-content: space-between;
+}
+
 .btn_player {
   /* width: 30%; */
-  /* display: inline-block; */
+  /* display: inline; */
 }
 
 .level {
@@ -186,7 +271,8 @@ body {
 
 .btn_players {
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: center;
   /* width: 30%; */
   /* margin: 0 auto; */
   /* display: inline-block; */
@@ -234,6 +320,7 @@ label {
 .button {
   text-align: center;
   padding: 20px;
+  z-index: 100;
 }
 
 .btn {

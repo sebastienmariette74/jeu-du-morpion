@@ -17,7 +17,7 @@
   </div>
   <div id="btnGames" class="button">
     <!-- <button id="minimisedGame" type="button" class="btn btn-primary">Jeu simplifié</button> -->
-    <button id="start_game" type="button" class="btn btn-danger">start</button>
+    <button id="start_game" type="button" class="btn">commencer</button>
   </div>
   <!-- <div id="btnStarts" class="button">
     <button id="start" class="btn btn-primary">START</button>
@@ -79,22 +79,40 @@
     <div id="modalContent1" class="modal-content">    
       <!-- <span class="close">&times;</span>   -->
       <div class="btn_players">
-        <div id="btn1player" class="btn_player">
-          <!-- <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked value="solo"> -->
-          <input  type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked value="solo">
-          <!-- <label class="form-check-label" for="flexRadioDefault1"> -->
-          <label  for="flexRadioDefault1">
-            1 joueur
-          </label>
+        <div class="row_player">
+          <div id="btn1player" class="btn_player">
+            <!-- <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked value="solo"> -->
+            <input  type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked value="solo">
+            <!-- <label class="form-check-label" for="flexRadioDefault1"> -->
+            <label  for="flexRadioDefault1">
+              1 joueur
+            </label>          
+          </div>
+          <div id="colors_player1" class="colors">
+            <div id="color_one" class="color color_one"></div>
+            <div id="color_two" class="color color_two"></div>
+            <div id="color_three" class="color color_three"></div>
+            <div id="color_four" class="color color_four"></div>
+            <div id="color_five" class="color color_five"></div>
+          </div>
         </div>
-        <div id="btn2players" class="btn_player">
-          <!-- <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="duo"> -->
-          <input  type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="duo">
-          <!-- <label class="form-check-label" for="flexRadioDefault1"> -->
-          <label  for="flexRadioDefault1">
-            2 joueurs
-          </label>
-        </div>
+        <div class="row_player">
+          <div id="btn2players" class="btn_player">
+            <!-- <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="duo"> -->
+            <input  type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="duo">
+            <!-- <label class="form-check-label" for="flexRadioDefault1"> -->
+            <label  for="flexRadioDefault1">
+              2 joueurs
+            </label>
+          </div>
+          <div id="colors_player2" class="colors">
+            <div id="color_six" class="color color_six"></div>
+            <div id="color_seven" class="color color_seven"></div>
+            <div id="color_eight" class="color color_eight"></div>
+            <div id="color_nine" class="color color_nine"></div>
+            <div id="color_ten" class="color color_ten"></div>
+          </div>
+        </div>        
       </div>
       <div class="namePlayers">
         <input class="formulaire name_player" type="text" name="namePlayer1" id="namePlayer1" placeholder="Nom du Joueur 1">
