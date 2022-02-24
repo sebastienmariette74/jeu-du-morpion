@@ -123,16 +123,17 @@ body {
   /* display: inline-block; */
   margin: auto;
   display: flex;
-  top: 0;
+  top: 25%;
   right: 0;
-  bottom: 0;
-  left: 0;
-  width: 50%;
+  /* bottom: 0; */
+  /* left: 0; */
+  width: 30%;
   height: 30vh;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgb(255, 255, 255);
   color: black;
   /* text-align: center; */
   padding: 10px;
+  margin-right: 20px;
 }
 
 .namePlayers {
@@ -258,4 +259,261 @@ label {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+@media only screen and (min-width : 992px){
+  .title {
+    text-align: center;
+    padding: 30px 0;
+  }
+  
+  #grid {
+    /* text-align: center; */
+    position: relative;
+  }
+  
+  .box {
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+  }
+  
+  .under_grid {
+    position: absolute;
+    height: 480px;
+    width: 480px;
+    /*background: chocolate;
+    */top: 0;
+    left: 50%;
+    z-index: -1;
+    transform: translatex(-50%);
+    -webkit-transform: translatexY(-50%);
+    -moz-transform: translatexY(-50%);
+    -ms-transform: translatexY(-50%);
+    -o-transform: translatexY(-50%);
+    outline: chocolate solid 20px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+  }
+  
+  .players {
+    height: 150px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .displayPlayers {
+    display: flex;
+  }
+  
+  #player1 {
+    text-align: right;
+  }
+  
+  #hand2 {
+    text-align: right;
+  }
+  
+  .player {
+    /* width: 150px; */
+    margin: auto;  
+    text-transform: uppercase;
+    font-size: 32px;
+    padding: 10px;
+  }
+  
+  .hand {
+    width: 50px;
+    margin: auto;
+    padding: 10px;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    line-height: 150px;
+  }
+  
+  .box {
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; 
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    /* text-align: center; */
+  }
+  
+  
+  .modal-content {
+    /* display: flex;
+    position: relative;
+    justify-content: center;
+    flex-direction: row;
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%; 
+    height: 200px; */
+    /* margin: 0 auto; */
+    position: absolute;
+    /* display: inline-block; */
+    margin: auto;
+    display: flex;
+    top: 25%;
+    right: 0;
+    /* bottom: 0; */
+    /* left: 0; */
+    width: 30%;
+    height: 30vh;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    /* text-align: center; */
+    padding: 10px;
+    margin-right: 20px;
+  }
+  
+  .namePlayers {
+    display: flex;
+    /* flex-direction: column; */
+    /* width: 50%; */
+    justify-content: space-evenly;
+    align-items: center;
+    /* border: 1px solid rgb(206,212,218); */
+  }
+  
+  #namePlayer2 {
+    display: inline-block;
+  }
+  
+  .form-select {
+    display: inline-block;
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+  }
+  
+  .btn_player {
+    /* width: 30%; */
+    /* display: inline-block; */
+  }
+  
+  .level {
+    margin: 0 auto;
+  }
+  
+  .btn_players {
+    display: flex;
+    justify-content: space-evenly;
+    /* width: 30%; */
+    /* margin: 0 auto; */
+    /* display: inline-block; */
+  }
+  
+  .formulaire {
+    /* width: 30%; */
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    padding: 5px;
+    /* border: 1px solid rgb(206,212,218); */
+    /* margin-left: 40%; */
+  }
+  
+  .name_player {
+    border: 1px solid rgb(206,212,218);
+  }
+  
+  /* .name_player:focus {
+    outline: none;
+    border: 1px red solid !important;
+  } */
+  /* .name_player:hover {
+    border: 1px red solid;
+  } */
+  
+  input[type="text"]:focus {
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, .4);
+    /* border: 1px red solid; */
+    outline: none;
+  }
+  
+  label {
+    padding: 5px;
+  }
+  
+  .btn_submit {
+    margin-top: auto;
+    text-align: end;
+  }
+  
+  .button {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .btn {
+    width: 150px;
+    text-transform: uppercase;
+  
+  }
+  
+  /* #bloc {
+       display: inline-block;
+       color: chocolate;
+       margin: 0 auto;
+       position: relative;
+       top: 50%;
+       transform: translateY(-50%);
+       -webkit-transform: translateY(-50%);
+       -moz-transform: translateY(-50%);
+       -ms-transform: translateY(-50%);
+       -o-transform: translateY(-50%); 
+  } */
+  
+  
+  /* The Close Button */
+  .close {
+    position: absolute;
+    /* display: inline-block; */
+    color: #aaa;
+    bottom: 0;
+    right: 0;
+    font-size: 28px;
+    font-weight: bold;
+    width: auto;  
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
 }
