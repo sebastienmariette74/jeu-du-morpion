@@ -277,9 +277,47 @@ let initialParametersBegin = () => {
   // };
 };
 
-let hand1 = document.getElementById('hand1');
-let hand2 = document.getElementById('hand2');
 
+
+let svg1 = '<svg id="svgHand1" class="svg1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85 96.04"><title>round5</title><g id="Calque_2" data-name="Calque 2"><g id="Calque_1-2" data-name="Calque 1"><path d="M85,47.05c0,32-19.46,49-43.19,49C17.25,96,0,77,0,48.85,0,19.32,18.35,0,43.19,0,68.58,0,85,19.46,85,47.05ZM12.83,48.57c0,19.87,10.77,37.67,29.67,37.67S72.3,68.72,72.3,47.6c0-18.48-9.65-37.8-29.66-37.8S12.83,28.15,12.83,48.57Z" /></g></g></svg>';
+let svg2 = '<svg id="svgPlayer1" class="svg2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85 96.04"><title>round5</title><g id="Calque_2" data-name="Calque 2"><g id="Calque_1-2" data-name="Calque 1"><path d="M85,47.05c0,32-19.46,49-43.19,49C17.25,96,0,77,0,48.85,0,19.32,18.35,0,43.19,0,68.58,0,85,19.46,85,47.05ZM12.83,48.57c0,19.87,10.77,37.67,29.67,37.67S72.3,68.72,72.3,47.6c0-18.48-9.65-37.8-29.66-37.8S12.83,28.15,12.83,48.57Z" /></g></g></svg>';
+let svg3 = '<svg id="svgHand2" class="svg3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72.03 93.18"><title>cross</title><g id="Calque_2" data-name="Calque 2"><g id="Calque_1-2" data-name="Calque 1"><path d="M58.06,93.18,46.17,72.58c-4.84-7.88-7.88-13-10.78-18.39h-.28C32.49,59.58,29.86,64.56,25,72.72L13.82,93.18H0L28.48,46,1.11,0h14l12.3,21.84c3.46,6.09,6.09,10.79,8.57,15.76h.42c2.62-5.53,5-9.81,8.43-15.76L57.51,0H71.33L43,45.34,72,93.18Z"/></g></g></svg>';
+let svg4 = '<svg id="svgPlayer2" class="svg4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72.03 93.18"><title>cross</title><g id="Calque_2" data-name="Calque 2"><g id="Calque_1-2" data-name="Calque 1"><path d="M58.06,93.18,46.17,72.58c-4.84-7.88-7.88-13-10.78-18.39h-.28C32.49,59.58,29.86,64.56,25,72.72L13.82,93.18H0L28.48,46,1.11,0h14l12.3,21.84c3.46,6.09,6.09,10.79,8.57,15.76h.42c2.62-5.53,5-9.81,8.43-15.76L57.51,0H71.33L43,45.34,72,93.18Z"/></g></g></svg>';
+
+
+
+// let first = document.getElementById('first');
+// let second = document.getElementById('second');
+// let third = document.getElementById('third');
+// first.innerHTML = svg2;
+// second.innerHTML = svg2;
+// third.innerHTML = svg2;
+
+// if(first.innerHTML === "'" + svg2 + "'" ){
+//   console.log('ok')
+// } else {
+//   console.log('non')
+// };
+// console.log(first.innerHTML)
+// console.log(second.innerHTML)
+// console.log(third.innerHTML)
+
+
+
+
+let blue = 'blue';
+let hand1 = document.getElementById('hand1');
+// hand1.innerHTML = svg1;
+
+let svgHand1 = document.getElementById('svgHand1');
+let svgPlayer1 = document.getElementById('svgHand1');
+let svgHand2 = document.getElementById('svgHand1');
+let svgPlayer2 = document.getElementById('svgHand1');
+// svgHand1.style.fill = 'chocolate';
+
+let hand2 = document.getElementById('hand2');
+// let img = document.getElementById('img');
+// img.style.fill = "red";
 // initialise l'affichage de la main 
 let initializedHand = () => {
   hand1.textContent = '';
@@ -290,10 +328,16 @@ let gameWon = false;
 
 let play1 = document.getElementById('player1');
 let play2 = document.getElementById('player2');
-let modal = document.getElementById("window-winner");
+let modal0 = document.getElementById("window-winner");
+
 let modal1 = document.getElementById("window-open");
+let modalContent1 = document.getElementById("modalContent1");
+// modalContent1.style.height = "50vh";
 let modal2 = document.getElementById("window-equality");
+let modal3 = document.getElementById("window-honor");
 let modalContent = document.getElementById("modalContent");
+let modalContent2 = document.getElementById("modalContent2");
+// modalContent2.style.height = "50vh";
 let btnBeginWindowWinner = document.getElementById('begin_Button_window_winner');
 let btnRestartWindowWinner = document.getElementById('restart_Button_window_winner');
 let btnBeginWindowEquality = document.getElementById('begin_Button_window_equality');
@@ -330,6 +374,19 @@ let responseMorpion = ()=>{
   timeOutResponseMorpion = window.setTimeout(delayResponseMorpion, 0);
 };
 
+
+// fonction pour fixer le délai d'affichage de la fenêtre "honneur au perdant"
+let timeOutWindowHonor = '';
+let delayWindowHonor = () => {
+  modal3.style.display = "none";
+};
+let TimeWindowHonor = ()=>{
+  timeOutResponseMorpion = window.setTimeout(delayWindowHonor, 2000);
+};
+
+
+
+
 /* on remplit un tableau de combinaisons vierge des différentes cases jouées par les joueurs */
 let boxPlayed = "";
 let blankTableCombinationsCompleted = () => {
@@ -364,11 +421,19 @@ let clic = (event) => {
         handNumber ++;
         // audioPlayer1.play();
         event.innerText = "O"; 
+        event.style.fontSize = "75px";
+        // event.innerHTML = svg2;
+        console.log(svg2);
+        console.log(event.innerHTML);
+        console.log(event.innerText);
+
+        // event.style.color = 'blue';
+
 
         
         /* on remplit un tableau de combinaisons vierge des différentes cases jouées par les joueurs */
-        boxPlayed = event;
-        blankTableCombinationsCompleted();    
+        // boxPlayed = event;
+        // blankTableCombinationsCompleted();    
         win();             /* on appelle la fonction pour savoir si le joueur a gagné après avoir joué son coup */
         messageEquality(); /* on appelle la fonction si les joueurs ont fait égalité */
         whoPlay();         /* on indique quel joueur commence */
@@ -378,6 +443,7 @@ let clic = (event) => {
       } else {
         handNumber ++;
         event.innerText = "X"; 
+        event.style.fontSize = "75px";
         // boxPlayed = event;
         // blankTableCombinationsCompleted();
         win();
@@ -473,6 +539,7 @@ let clic = (event) => {
         player1 = false;
         boxToPlay = tableBoxRemaining[0];
         boxToPlay.innerText = "X";
+        tableBoxRemaining.splice(0, 1);
         win();
         messageEquality();
         whoPlay();
@@ -1139,14 +1206,17 @@ namePlayer2.addEventListener('change', () => {
 let whoPlay = () => {  
   if (onePlayer){
     hand1.innerText = 'O';
+    // hand1.innerHTML = svg1;
     hand2.innerText = '';
   } else if (player1){
     
     hand1.innerText = '';
     hand2.innerText = 'X';
+    // hand2.innerHTML = svg3;
     
   } else {
     hand1.innerText = 'O';
+    // hand1.innerHTML = svg1;
     hand2.innerText = '';
   }
 };
@@ -1159,22 +1229,22 @@ let messageWinner = () => {
     displayPlayer1.style.opacity = 0.3;
     if (onePlayer){
       if (victoriesPlayer1 > victoriesMorpion){
-        messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \nvous menez " + victoriesPlayer1 + " à " + victoriesMorpion;
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\n\nVous menez " + victoriesPlayer1 + " à " + victoriesMorpion + '.';
       } else if (victoriesPlayer1 < victoriesMorpion){
-        messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \n" + play2.innerText + " mène " + victoriesMorpion + " à " + victoriesPlayer1;
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\n\n" + play2.innerText + " mène " + victoriesMorpion + " à " + victoriesPlayer1 + '.';
       } else {
-        messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \nVous êtes à " + victoriesPlayer1 + " partout P1.";
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\n\nVous êtes à " + victoriesPlayer1 + " partout.";
       };
     } else {
       if (victoriesPlayer1 > victoriesPlayer2){
-        messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \nvous menez " + victoriesPlayer1 + " à " + victoriesPlayer2;
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\n\nvous menez " + victoriesPlayer1 + " à " + victoriesPlayer2 + '.';
       } else if (victoriesPlayer1 < victoriesPlayer2){
-        messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \n" + play2.innerText + " mène " + victoriesPlayer2 + " à " + victoriesPlayer1;
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\n\n" + play2.innerText + " mène " + victoriesPlayer2 + " à " + victoriesPlayer1 + '.';
       } else {
-        messageWinPlayer.innerText = "Bravo " + play1.innerText + ", vous avez gagné la partie !!! \nVous êtes à " + victoriesPlayer1 + " partout P1.";
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\n\nVous êtes à " + victoriesPlayer1 + " partout P1.";
       };
     }    
-    modal.style.display = 'block';
+    modal0.style.display = 'block';
     // start.disabled = true;  
     // restart.disabled = true; 
     player1Win = true;
@@ -1184,13 +1254,13 @@ let messageWinner = () => {
     victoriesMorpion ++;
     displayPlayer2.style.opacity = 0.3;
     displayPlayer1.style.opacity = 0.3;
-    modal.style.display = 'block';
+    modal0.style.display = 'block';
     if (victoriesMorpion > victoriesPlayer1){
-      messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!! \nvous menez " + victoriesMorpion + " à " + victoriesPlayer1 + '.';
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + " !!! \n\nVous menez " + victoriesMorpion + " à " + victoriesPlayer1 + '.';
     } else if (victoriesMorpion < victoriesPlayer1){
-      messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!! \n" + play1.innerText + " mène " + victoriesPlayer1 + " à " + victoriesMorpion + '.';;
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + " !!! \n\n" + play1.innerText + " mène " + victoriesPlayer1 + " à " + victoriesMorpion + '.';;
     } else {
-      messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!! \nVous êtes à " + victoriesPlayer1 + " manche(s) partout.";
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + " !!! \n\nVous êtes à " + victoriesPlayer1 + " manche(s) partout.";
     };
     // start.disabled = true;  
     // restart.disabled = true; 
@@ -1203,13 +1273,13 @@ let messageWinner = () => {
     displayPlayer2.style.opacity = 0.3;
     displayPlayer1.style.opacity = 0.3;
     if (victoriesPlayer2 > victoriesPlayer1){
-      messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!! \nvous menez " + victoriesPlayer2 + " à " + victoriesPlayer1 + '.';
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + " !!! \n\nvous menez " + victoriesPlayer2 + " à " + victoriesPlayer1 + '.';
     } else if (victoriesPlayer2 < victoriesPlayer1){
-      messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!! \n" + play1.innerText + " mène " + victoriesPlayer1 + " à " + victoriesPlayer2 + '.';;
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + " !!! \n\n" + play1.innerText + " mène " + victoriesPlayer1 + " à " + victoriesPlayer2 + '.';;
     } else {
-      messageWinPlayer.innerText = "Bravo " + play2.innerText + ", vous avez gagné la partie !!! \nVous êtes à " + victoriesPlayer1 + " manche(s) partout.";
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + " !!! \n\nVous êtes à " + victoriesPlayer1 + " manche(s) partout.";
     };
-    modal.style.display = 'block'; 
+    modal0.style.display = 'block'; 
     player1Win = false;
     endGame = true;
   };
@@ -1241,6 +1311,22 @@ let win = () => {
   // };
 
   if (
+    // ((box1.innerHTML === svg2) && (box1.innerHTML === box2.innerHTML) && (box1.innerHTML === box3.innerHTML)) || 
+    // ((box4.innerHTML === svg2) && (box4.innerHTML === box5.innerHTML) && (box4.innerHTML === box6.innerHTML)) || 
+    // ((box7.innerHTML === svg2) && (box7.innerHTML === box8.innerHTML) && (box7.innerHTML === box9.innerHTML)) || 
+    // ((box1.innerHTML === svg2) && (box1.innerHTML === box4.innerHTML) && (box1.innerHTML === box7.innerHTML)) || 
+    // ((box2.innerHTML === svg2) && (box2.innerHTML === box5.innerHTML) && (box2.innerHTML === box8.innerHTML)) || 
+    // ((box3.innerHTML === svg2) && (box3.innerHTML === box6.innerHTML) && (box3.innerHTML === box9.innerHTML)) || 
+    // ((box1.innerHTML === svg2) && (box1.innerHTML === box5.innerHTML) && (box1.innerHTML === box9.innerHTML)) || 
+    // ((box3.innerHTML === svg2) && (box3.innerHTML === box5.innerHTML) && (box3.innerHTML === box7.innerHTML)) ||
+    // ((box1.innerHTML === svg4) && (box1.innerHTML === box2.innerHTML) && (box1.innerHTML === box3.innerHTML)) || 
+    // ((box4.innerHTML === svg4) && (box4.innerHTML === box5.innerHTML) && (box4.innerHTML === box6.innerHTML)) || 
+    // ((box7.innerHTML === svg4) && (box7.innerHTML === box8.innerHTML) && (box7.innerHTML === box9.innerHTML)) || 
+    // ((box1.innerHTML === svg4) && (box1.innerHTML === box4.innerHTML) && (box1.innerHTML === box7.innerHTML)) || 
+    // ((box2.innerHTML === svg4) && (box2.innerHTML === box5.innerHTML) && (box2.innerHTML === box8.innerHTML)) || 
+    // ((box3.innerHTML === svg4) && (box3.innerHTML === box6.innerHTML) && (box3.innerHTML === box9.innerHTML)) || 
+    // ((box1.innerHTML === svg4) && (box1.innerHTML === box5.innerHTML) && (box1.innerHTML === box9.innerHTML)) || 
+    // ((box3.innerHTML === svg4) && (box3.innerHTML === box5.innerHTML) && (box3.innerHTML === box7.innerHTML))
     ((box1.innerText === 'O') && (box1.innerText === box2.innerText) && (box1.innerText === box3.innerText)) || 
     ((box4.innerText === 'O') && (box4.innerText === box5.innerText) && (box4.innerText === box6.innerText)) || 
     ((box7.innerText === 'O') && (box7.innerText === box8.innerText) && (box7.innerText === box9.innerText)) || 
@@ -1265,7 +1351,9 @@ let win = () => {
 
 /* bouton continuer de la la fenêtre "partie gagnée" */
 btnBeginWindowWinner.addEventListener('click', () => {
-  modal.style.display = "none";
+  modal0.style.display = "none";
+  modal3.style.display = "block";
+  TimeWindowHonor();
   // gameWinned = false;
   endGame = false;
   if (onePlayer){
@@ -1319,6 +1407,7 @@ btnBeginWindowEquality.addEventListener('click', () => {
   };
   initialParametersBegin();
   // initializedHand();
+
 });
 
 /* bouton réinitialiser de la la fenêtre "partie gagnée" */

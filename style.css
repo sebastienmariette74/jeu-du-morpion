@@ -60,7 +60,7 @@ h1 {
   border: 1px solid black;
   cursor: pointer;
   margin: 5px;
-  /* line-height: 150px; */
+  line-height: calc((100vw - 70px) / 3);
 }
 
 .under_grid {
@@ -159,12 +159,14 @@ h1 {
 }
 
 #hand2 {
-  text-align: right;
+  /* text-align: right; */
   order : 2;
+
 }
 
 .player {
   /* width: 150px; */
+  height: 50px;
   margin: auto;  
   text-transform: uppercase;
   font-size: 30px;
@@ -173,8 +175,21 @@ h1 {
 
 .hand {
   width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  font-size: 30px;
+
+  /* position: relative; */
+  /* line-height: 100px; */
   margin: auto;
-  padding: 10px;
+  /* padding: 10px; */
+  /* text-align: center; */ 
+
+}
+
+.svg1, .svg3 {
+  width: 30px;
 }
 
 .row {
@@ -186,57 +201,119 @@ h1 {
 
 
 
-.modal {
+
+.modal1 {
   display: none; 
   position: fixed; 
   z-index: 1; 
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
+  width: 100%;
+  height: 100%;
   overflow: auto; 
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  /* text-align: center; */
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
 }
-
-
-.modal-content {
-  /* display: flex;
-  position: relative;
-  justify-content: center;
-  flex-direction: row;
-  background-color: #fefefe;
-  margin: 15% auto; 
-  padding: 20px;
-  border: 1px solid #888;
-  width: 50%; 
-  height: 200px; */
-  /* margin: 0 auto; */
+.modal-content1 {
   position: absolute;
-  /* display: inline-block; */
   margin: auto;
   display: flex;
+  flex-direction: column;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   width: 80vw;
   height: 50vh;
-  background-color: rgb(255, 255, 255);
+  background-color: #ffffffde;
   color: black;
-  /* text-align: center; */
   padding: 10px;
-  /* margin-right: 20px; */
+  border-radius: 10px;
+  box-shadow: 0 5px 13px 4px grey;
+
+}
+.modal0, .modal2, .modal3 {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content0, .modal-content2, .modal-content3 {
+  position: absolute;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 80vw;
+  height: 50vh;
+  background-color: #ffffffde;
+  color: black;
+  padding: 10px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  box-shadow: 0 5px 13px 4px grey;
+
+}
+
+.modal-content3 {
+  height: 20vh;
+  text-align: center;
+}
+
+#messageWinPlayer {
+  text-align: center;
+}
+
+
+
+#modalContent {
+  text-align: center;
+}
+
+.Button_window_winner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  height: 100%;
+}
+
+#messageEquality {
+  text-align: center;
+}
+
+#restart_Button_window_winner, #restart_Button_window_equality {
+  margin-top: auto;
+  margin-left: auto;
+  background : red;
+  border : red;
+  letter-spacing: .1em;
 }
 
 .namePlayers {
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   /* width: 50%; */
   justify-content: space-evenly;
   align-items: center;
-  /* border: 1px solid rgb(206,212,218); */
+  margin: 10px 0;
+}
+
+.namePlayers input:first-child {
+  margin-bottom: 5px;
 }
 
 #namePlayer2 {
@@ -245,7 +322,7 @@ h1 {
 
 .form-select {
   display: inline-block;
-  width: 50%;
+  /* width: 50%; */
   margin: 0 auto;
   margin-top: 10px;
   border-radius: 5px;
@@ -258,16 +335,16 @@ h1 {
 .row_player {
   display: flex;
   justify-content: space-between;
+  max-width: 300px;
+
 }
 
-.btn_player {
-  /* width: 30%; */
-  /* display: inline; */
-}
 
 .level {
   margin: 0 auto;
 }
+
+#btn1player
 
 .btn_players {
   display: flex;
@@ -429,6 +506,7 @@ label {
   
   .player {
     /* width: 150px; */
+    /* height: 100px; */
     margin: auto;  
     text-transform: uppercase;
     font-size: 32px;
@@ -436,7 +514,8 @@ label {
   }
   
   .hand {
-    width: 50px;
+    /* width: 50px; */
+    height: 100px;
     margin: auto;
     padding: 10px;
   }
@@ -500,6 +579,7 @@ label {
     /* width: 50%; */
     justify-content: space-evenly;
     align-items: center;
+    margin-bottom: 20px;
     /* border: 1px solid rgb(206,212,218); */
   }
   
@@ -512,6 +592,7 @@ label {
     width: 50%;
     margin: 0 auto;
     margin-top: 10px;
+    margin-bottom: 20px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
