@@ -16,19 +16,16 @@
     <h1>Le jeu du morpion</h1>
   </div>
   <div id="btnGames" class="button">
-    <!-- <button id="minimisedGame" type="button" class="btn btn-primary">Jeu simplifié</button> -->
-    <button id="start_game" type="button" class="btn">commencer</button>
+    <button id="start_game" type="button" class="btn btn_start">commencer</button>
   </div>
-  <!-- <div id="btnStarts" class="button">
-    <button id="start" class="btn btn-primary">START</button>
-    <button id="restart" class="btn btn-danger">RESTART</button>
-  </div> -->
   <div class="players">
-    <div class="displayPlayers">
+    <div class="displayPlayers cross">
+      <div class="cross--zindex round--color">O</div>
       <div id="player1" class="player">Player 1</div>
       <div id="hand1" class="hand"></div>
     </div>
-    <div class="displayPlayers">
+    <div class="displayPlayers cross">
+      <div class="cross--zindex cross--color">X</div>
       <div id="hand2" class="hand"></div>
       <div id="player2" class="player">Player 2</div>
     </div>
@@ -38,50 +35,37 @@
     <div class="under_grid"></div>
   </div>
   <div id="window-winner" class="modal modal0">  
-    <div id="modalContent0" class="modal-content0"> 
-      <div id="messageWinPlayer"></div>
+    <div id="modalContent0" class="modal-content modal-content0"> 
+      <div id="messageWinPlayer" class="text text_winner"></div>
       <div class="Button_window_winner" >
-        <div id="begin_Button_window_winner" class="btn btn-primary ">Continuer</div>
-        <div id="restart_Button_window_winner" class="btn btn-primary ">Restart</div>
+        <div id="begin_Button_window_winner" class="btn btn_begin ">Continuer</div>
+        <div id="restart_Button_window_winner" class="btn btn_restart ">Restart</div>
       </div>
-      <!-- <span id="close-window-winner" class="close">&times;</span>         -->
     </div>
   </div>
   <div id="window-equality" class="modal modal2">  
-    <div id="modalContent2" class="modal-content2"> 
-      <div id="messageEquality">
+    <div id="modalContent2" class="modal-content modal-content2"> 
+      <div id="messageEquality" class="text text_equality">
       </div>
       <div class="Button_window_winner">
-        <div id="begin_Button_window_equality" class="btn btn-primary ">Continuer</div>
-        <div id="restart_Button_window_equality" class="btn btn-primary ">Restart</div>
+        <div id="begin_Button_window_equality" class="btn btn_begin ">Continuer</div>
+        <div id="restart_Button_window_equality" class="btn btn_restart ">Restart</div>
       </div>
-      <!-- <span id="close-window-equality" class="close">&times;</span>         -->
     </div>
   </div>
   <div id="window-honor" class="modal modal3">  
-    <div id="modalContent3" class="modal-content3"> 
-      <div id="message_honor">!!! Honneur au perdant !!!
+    <div id="modalContent3" class="modal-content modal-content3"> 
+      <div id="message_honor" class="text text_honor">!!! Honneur au perdant !!!
       </div>
-      <!-- <div class="Button_window_winner">
-        <div id="begin_Button_window_equality" class="btn btn-primary ">Continuer</div>
-        <div id="restart_Button_window_equality" class="btn btn-primary ">Restart</div>
-      </div> -->
-      <!-- <span id="close-window-equality" class="close">&times;</span>         -->
     </div>
-  </div>
-  
+  </div>  
   <div id="window-open" class="modal modal1">  
-    <div id="modalContent1" class="modal-content1">    
-      <!-- <span class="close">&times;</span>   -->
+    <div id="modalContent1" class="modal-content modal-content1">    
       <div class="btn_players">
         <div class="row_player">
           <div id="btn1player" class="btn_player">
-            <!-- <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked value="solo"> -->
             <input  type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked value="solo">
-            <!-- <label class="form-check-label" for="flexRadioDefault1"> -->
-            <label  for="flexRadioDefault1">
-              1 joueur
-            </label>          
+            <label  for="flexRadioDefault1">1 joueur</label>          
           </div>
           <div id="colors_player1" class="colors">
             <div id="color_one" class="color color_one"></div>
@@ -93,12 +77,8 @@
         </div>
         <div class="row_player">
           <div id="btn2players" class="btn_player">
-            <!-- <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="duo"> -->
             <input  type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="duo">
-            <!-- <label class="form-check-label" for="flexRadioDefault1"> -->
-            <label  for="flexRadioDefault1">
-              2 joueurs
-            </label>
+            <label  for="flexRadioDefault1">2 joueurs</label>
           </div>
           <div id="colors_player2" class="colors">
             <div id="color_six" class="color color_six"></div>
@@ -113,7 +93,6 @@
         <input class="formulaire name_player" type="text" name="namePlayer1" id="namePlayer1" placeholder="Nom du Joueur 1">
         <input class="formulaire name_player" type="text" name="namePlayer1" id="namePlayer2" placeholder="Nom du Joueur 2">
       </div>
-      <!-- <select id="firstPlayer" class="form-select" aria-label="Default select example"> -->
       <select id="firstPlayer" class="form-select" aria-label="Default select example">
         <option  selected>Qui veut commencer ?</option>
         <option id="textJoueur1" value="player1"></option>
@@ -146,17 +125,13 @@
         </div>
       </div>
       <div class="btn_submit">
-        <button id="btn1" class="btn btn-primary">suivant</button>
+        <button id="btn1" class="btn btn_begin">suivant</button>
 
       </div>
     </div>
   </div>
-  <div> <br>
-    Rajouter une modale - honneur au perdant <br><br>
-    
-  </div>
-  <!-- <div id="first"></div>
-  <div id="second"></div>
+  <div id="first">X</div>
+  <!-- <div id="second"></div>
   <div id="third"></div> -->
 
 

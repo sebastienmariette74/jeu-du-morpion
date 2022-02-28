@@ -167,6 +167,30 @@ let displayPlayer1 = document.getElementById('player1');
 let displayPlayer2 = document.getElementById('player2');
 // let minimisedGame = document.getElementById('minimisedGame');
 let startGame = document.getElementById('start_game');
+
+
+let intervalId;
+
+
+let changeBorderColor = () => {  
+  if (!intervalId) {
+    intervalId = setInterval(flashColor, 500);
+  }
+}
+
+let flashColor = () => {  
+    if (startGame.style.borderColor === 'white'){
+      startGame.style.borderColor = 'transparent';
+    } else {
+    startGame.style.borderColor = 'white';
+    }
+};
+
+// setInterval(delayStartGame, 500);
+changeBorderColor();
+
+
+
 let victoriesPlayer1 = 0;
 let victoriesMorpion = 0;
 let victoriesPlayer2 = 0;
@@ -286,7 +310,23 @@ let svg4 = '<svg id="svgPlayer2" class="svg4" xmlns="http://www.w3.org/2000/svg"
 
 
 
-// let first = document.getElementById('first');
+let first = document.getElementById('first');
+first.style.cursor = 'pointer';
+first.style.color = 'red';
+first.addEventListener('click', ()=> {
+  first.style.color = 'blue';
+  
+  setTimeout(()=>{
+    first.style.color = 'red';
+  }, 1000);
+
+
+
+})
+
+
+
+
 // let second = document.getElementById('second');
 // let third = document.getElementById('third');
 // first.innerHTML = svg2;
@@ -335,6 +375,7 @@ let modalContent1 = document.getElementById("modalContent1");
 // modalContent1.style.height = "50vh";
 let modal2 = document.getElementById("window-equality");
 let modal3 = document.getElementById("window-honor");
+// modal3.style.display = 'block';
 let modalContent = document.getElementById("modalContent");
 let modalContent2 = document.getElementById("modalContent2");
 // modalContent2.style.height = "50vh";
@@ -369,6 +410,7 @@ let boxToPlay = '';
 let timeOutResponseMorpion = '';
 let delayResponseMorpion = () => {
   boxToPlay.innerText = "X";
+  boxToPlay.style.fontSize = "75px";
 };
 let responseMorpion = ()=>{
   timeOutResponseMorpion = window.setTimeout(delayResponseMorpion, 0);
@@ -408,6 +450,14 @@ let roundOrCross = () => {
   }
 };
 
+
+
+// setTimeoutCross(()=>{
+//   console.log('ok');
+//   // boxToPlay.innerText = 'X';          /* on joue la case */
+//   // boxToPlay.style.fontSize = "75px";      
+// }, 1000);  
+
 // fonction appelée lorsqu'on clique sur une case. Suivant le joueur, on met un rond ou une croix et on détermine le gagnant ou l'égalité.
 let clic = (event) => { 
   // start.disabled = false; 
@@ -423,10 +473,6 @@ let clic = (event) => {
         event.innerText = "O"; 
         event.style.fontSize = "75px";
         // event.innerHTML = svg2;
-        console.log(svg2);
-        console.log(event.innerHTML);
-        console.log(event.innerText);
-
         // event.style.color = 'blue';
 
 
@@ -436,9 +482,9 @@ let clic = (event) => {
         // blankTableCombinationsCompleted();    
         win();             /* on appelle la fonction pour savoir si le joueur a gagné après avoir joué son coup */
         messageEquality(); /* on appelle la fonction si les joueurs ont fait égalité */
-        whoPlay();         /* on indique quel joueur commence */
-        displayPlayer2.style.opacity = 1;
+        // whoPlay();         /* on indique quel joueur commence */
         displayPlayer1.style.opacity = 0.3;          
+        displayPlayer2.style.opacity = 1;
         player1 = false;
       } else {
         handNumber ++;
@@ -448,16 +494,19 @@ let clic = (event) => {
         // blankTableCombinationsCompleted();
         win();
         messageEquality();
-        whoPlay();
-        displayPlayer2.style.opacity = 0.3;
+        // whoPlay();
         displayPlayer1.style.opacity = 1;
+        displayPlayer2.style.opacity = 0.3;
         player1 = true;
       };
     }           
     
     else if (onePlayer && player1){ /* partie à 1 joueur, player 1 commence la partie */     
+      displayPlayer1.style.opacity = 0.3;
+      displayPlayer2.style.opacity = 1;          
       handNumber ++;
-      event.innerText = "O";       
+      event.innerText = "O";   
+      event.style.fontSize = "75px";    
 
       let index = tableBoxRemaining.indexOf(event); /* on récupère l'index de la case jouée pour la retirer du tableau */
       tableBoxRemaining.splice(index, 1);           /* des cases restantes */
@@ -505,45 +554,70 @@ let clic = (event) => {
       // blankTableCombinationsCompleted();
       win(); /* on appelle la fonction pour savoir si le joueur a gagné après avoir joué son coup */
       messageEquality(); /* on appelle la fonction si les joueurs ont fait égalité */
-      whoPlay(); /* on indique quel joueur commence */
+      // whoPlay(); /* on indique quel joueur commence */
 
-      if (onePlayer){
-        displayPlayer1.style.opacity = 1;
-        displayPlayer2.style.opacity = 0.3;  
-      } else {
-        displayPlayer2.style.opacity = 1;
-        displayPlayer1.style.opacity = 0.3;  
-      };
+      // if (onePlayer){
+      //   displayPlayer1.style.opacity = 1;
+      //   displayPlayer2.style.opacity = 0.3;  
+      // } else {
+      //   displayPlayer1.style.opacity = 0.3;  
+      //   displayPlayer2.style.opacity = 1;
+      // };
+
+      
       player1 = false;
 
       if (easyGame && tableBoxRemaining.length > 1 && !endGame){
-        handNumber++;
-        // player1 = false;
-        let numberBoxRemaining = tableBoxRemaining.length; /* on récupère le nombre de cases restantes */
-        /* on cherche un nombre aléatoire pour cocher au hasard une des cases restantes */
-        let randomNumber = function() { 
-          return Math.floor(Math.random() * (numberBoxRemaining-1));
-        };        
-        let nb = randomNumber();
-        boxToPlay = tableBoxRemaining[nb];
-        tableBoxMorpion.push(boxToPlay); /* on rajoute au tableau des cases déjà jouées par morpion la case jouée */
-        boxToPlay.innerText = "X";       /* on joue la case */
-        tableBoxRemaining.splice(nb, 1); /* on enlève la case du tableau des cases restantes */
+        
+        
+        setTimeout(()=>{
+          handNumber++;        
+          // player1 = false;
+          let numberBoxRemaining = tableBoxRemaining.length; /* on récupère le nombre de cases restantes */
+          /* on cherche un nombre aléatoire pour cocher au hasard une des cases restantes */
+          let randomNumber = function() { 
+            return Math.floor(Math.random() * (numberBoxRemaining-1));
+          };        
+          let nb = randomNumber();
+          boxToPlay = tableBoxRemaining[nb];
+          tableBoxMorpion.push(boxToPlay);    /* on rajoute au tableau des cases déjà jouées par morpion la case jouée */
+          boxToPlay.innerText = 'X';          /* on joue la case */
+          boxToPlay.style.fontSize = "75px";   
+          tableBoxRemaining.splice(nb, 1);    /* on enlève la case du tableau des cases restantes */   
+          displayPlayer1.style.opacity = 1;
+          displayPlayer2.style.opacity = 0.3;
+        }, 1000);                
+        
+        setTimeout(()=>{
+          win(); 
+          messageEquality(); 
+          // whoPlay();    
+          player1 = true;
+        }, 1100);          
+        
 
-        win(); 
-        messageEquality(); 
-        whoPlay(); 
-        player1 = true;
-      } else  if (easyGame && handNumber < 9 && !endGame){        
-        handNumber ++;
-        player1 = false;
-        boxToPlay = tableBoxRemaining[0];
-        boxToPlay.innerText = "X";
-        tableBoxRemaining.splice(0, 1);
-        win();
-        messageEquality();
-        whoPlay();
-        player1 = true;
+
+      } else  if (easyGame && handNumber < 9 && !endGame){    
+        
+        setTimeout(()=>{
+          handNumber ++;
+          player1 = false;
+          boxToPlay = tableBoxRemaining[0];
+          boxToPlay.innerText = 'X';          /* on joue la case */
+          boxToPlay.style.fontSize = "75px";   
+          tableBoxRemaining.splice(0, 1);    /* on enlève la case du tableau des cases restantes */   
+          displayPlayer1.style.opacity = 1;
+          displayPlayer2.style.opacity = 0.3;
+        }, 1000);                
+        
+        setTimeout(()=>{
+          win(); 
+          messageEquality(); 
+          // whoPlay();    
+          displayPlayer1.style.opacity = 1;
+          displayPlayer2.style.opacity = 0.3;
+          player1 = true;
+        }, 1100);          
       };     
       
       if (middleGame && !endGame){
@@ -553,8 +627,11 @@ let clic = (event) => {
         if (handNumber === 2){ 
 
           if (box5.innerText === ''){
-            boxToPlay = box5;
-            boxToPlay.innerText = 'X';
+            
+            setTimeout(()=>{
+              boxToPlay = box5;
+              boxToPlay.innerText = 'X';
+              boxToPlay.style.fontSize = '75px';
 
             // 1
             /* actualisation du tableau des combinaisons possibles pour le joueur 2 */
@@ -603,6 +680,7 @@ let clic = (event) => {
             /* actualisation du tableau des cases restantes */
             let index = tableBoxRemaining.indexOf(box5);
             tableBoxRemaining.splice(index, 1);
+            }, 1000)
 
           } 
           
@@ -614,8 +692,9 @@ let clic = (event) => {
             };        
             let nb = randomNumber();
             boxToPlay = tableBoxRemaining[nb];
-            boxToPlay.innerText = "X";       /* on joue la case */
-            tableBoxRemaining.splice(nb, 1); /* on enlève la case du tableau des cases restantes */
+            boxToPlay.innerText = "X";          /* on joue la case */
+            boxToPlay.style.fontSize = "75px";
+            tableBoxRemaining.splice(nb, 1);    /* on enlève la case du tableau des cases restantes */
 
             // 1
             /* actualisation du tableau des combinaisons possibles pour le joueur 2 */
@@ -675,12 +754,13 @@ let clic = (event) => {
             if (tablePossibleCombinationsPlayer2[i].length === 1 && counterattack === false){             /* si le tableau a une seule valeur */
               boxToPlay = tablePossibleCombinationsPlayer2[i][0];              /* on joue la case du tableau correspondant */ 
               boxToPlay.innerText = 'X';
+              boxToPlay.style.fontSize = '75px';
               counterattack = true;
             };
           };
           win();
           messageEquality();
-          whoPlay();
+          // whoPlay();
           player1 = true;         
         
           if (tablePossibleCombinationsPlayer1 != '' && !endGame){      
@@ -691,6 +771,7 @@ let clic = (event) => {
               if (tablePossibleCombinationsPlayer1[i].length === 1 && !parade){  /* si le tableau a une seule valeur */
                 boxToPlay = tablePossibleCombinationsPlayer1[i][0];              /* on joue la case du tableau correspondant */ 
                 boxToPlay.innerText = 'X';
+                boxToPlay.style.fontSize = '75px';
                 parade = true;
                 let index = tableBoxRemaining.indexOf(boxToPlay);
                 tableBoxRemaining.splice(index, 1);
@@ -746,8 +827,9 @@ let clic = (event) => {
                 // tableBoxMorpion.push(boxToPlay); /* on rajoute au tableau des cases déjà jouées par morpion la case jouée */
                 // tableBoxMorpion.push(tableBoxRemaining[nb]);
                 // responseMorpion();
-                boxToPlay.innerText = "X"; /* on joue la case */
-                tableBoxRemaining.splice(nb, 1); /* on enlève la case tu tableau des cases restantes */
+                boxToPlay.innerText = "X";          /* on joue la case */
+                boxToPlay.style.fontSize = "75px";
+                tableBoxRemaining.splice(nb, 1);    /* on enlève la case tu tableau des cases restantes */
             };
 
             /* actualisation du tableau des cases jouées par Morpion */
@@ -798,17 +880,18 @@ let clic = (event) => {
             };
             win();
             messageEquality();
-            whoPlay();
+            // whoPlay();
             player1 = true;
           } 
           
           else if (!endGame){ /* plus de victoire possible, MORPION joue la case restante */
             boxToPlay = tableBoxRemaining[0];
             boxToPlay.innerText = "X";
+            boxToPlay.style.fontSize = "75px";
             tableBoxRemaining.splice(0, 1);
             win();
             messageEquality();
-            whoPlay();
+            // whoPlay();
             player1 = true;
           };
         };              
@@ -823,6 +906,7 @@ let clic = (event) => {
           if (box5.innerText === ''){
             boxToPlay = box5;
             boxToPlay.innerText = 'X';
+            boxToPlay.style.fontSize = '75px';
 
             // 1
             /* actualisation du tableau des combinaisons possibles pour le joueur 2 */
@@ -876,8 +960,9 @@ let clic = (event) => {
           
           else {
             boxToPlay = tableBoxRemaining[0];
-            boxToPlay.innerText = "X";       /* on joue la case */
-            tableBoxRemaining.splice(0, 1); /* on enlève la case du tableau des cases restantes */
+            boxToPlay.innerText = "X";           /* on joue la case */
+            boxToPlay.style.fontSize = "75px";
+            tableBoxRemaining.splice(0, 1);      /* on enlève la case du tableau des cases restantes */
 
             // 1
             /* actualisation du tableau des combinaisons possibles pour le joueur 2 */
@@ -937,12 +1022,13 @@ let clic = (event) => {
             if (tablePossibleCombinationsPlayer2[i].length === 1 && counterattack === false){   /* si le tableau a une seule valeur */
               boxToPlay = tablePossibleCombinationsPlayer2[i][0];                               /* on joue la case du tableau correspondant */ 
               boxToPlay.innerText = 'X';
+              boxToPlay.style.fontSize = '75px';
               counterattack = true;
             };
           };
           win();
           messageEquality();
-          whoPlay();
+          // whoPlay();
           player1 = true;         
         
           if (tablePossibleCombinationsPlayer1 != '' && !endGame){ 
@@ -953,6 +1039,7 @@ let clic = (event) => {
               if (tablePossibleCombinationsPlayer1[i].length === 1 && !parade){  /* si le tableau a une seule valeur */
                 boxToPlay = tablePossibleCombinationsPlayer1[i][0];              /* on joue la case du tableau correspondant */ 
                 boxToPlay.innerText = 'X';
+                boxToPlay.style.fontSize = '75px';
                 parade = true;
                 let index = tableBoxRemaining.indexOf(boxToPlay);
                 tableBoxRemaining.splice(index, 1);
@@ -1008,8 +1095,9 @@ let clic = (event) => {
                 // tableBoxMorpion.push(boxToPlay); /* on rajoute au tableau des cases déjà jouées par morpion la case jouée */
                 // tableBoxMorpion.push(tableBoxRemaining[nb]);
                 // responseMorpion();
-                boxToPlay.innerText = "X"; /* on joue la case */
-                tableBoxRemaining.splice(nb, 1); /* on enlève la case tu tableau des cases restantes */
+                boxToPlay.innerText = "X";          /* on joue la case */
+                boxToPlay.style.fontSize = "75px";
+                tableBoxRemaining.splice(nb, 1);    /* on enlève la case tu tableau des cases restantes */
             };
 
             /* actualisation du tableau des cases jouées par Morpion */
@@ -1060,17 +1148,18 @@ let clic = (event) => {
             };
             win();
             messageEquality();
-            whoPlay();
+            // whoPlay();
             player1 = true;
           }           
           else if (!endGame){ /* plus de victoire possible, MORPION joue la case restante */
             boxToPlay = tableBoxRemaining[0];
             boxToPlay.innerText = "X";
+            boxToPlay.style.fontSize = "75px";
             tableBoxRemaining.splice(0, 1);
 
             win();
             messageEquality();
-            whoPlay();
+            // whoPlay();
             player1 = true;
           };  
         };
@@ -1111,6 +1200,7 @@ let middleLevel = document.getElementById('middleLevel');
 
 // ouvre la fenêtre demandant les noms des joueurs ...
 startGame.addEventListener('click', () => {
+  clearInterval(intervalId);
   modal1.style.display = 'block';
   namePlayer2.style.display = 'none';
   firstPlayer.style.display = 'none';  
@@ -1203,23 +1293,23 @@ namePlayer2.addEventListener('change', () => {
 });
 
 // affiche une icone en face du joueur qui a la main
-let whoPlay = () => {  
-  if (onePlayer){
-    hand1.innerText = 'O';
-    // hand1.innerHTML = svg1;
-    hand2.innerText = '';
-  } else if (player1){
+// let whoPlay = () => {  
+//   if (onePlayer){
+//     hand1.innerText = 'O';
+//     // hand1.innerHTML = svg1;
+//     hand2.innerText = '';
+//   } else if (player1){
     
-    hand1.innerText = '';
-    hand2.innerText = 'X';
-    // hand2.innerHTML = svg3;
+//     hand1.innerText = '';
+//     hand2.innerText = 'X';
+//     // hand2.innerHTML = svg3;
     
-  } else {
-    hand1.innerText = 'O';
-    // hand1.innerHTML = svg1;
-    hand2.innerText = '';
-  }
-};
+//   } else {
+//     hand1.innerText = 'O';
+//     // hand1.innerHTML = svg1;
+//     hand2.innerText = '';
+//   }
+// };
 
 // ouvre la fenêtre annoncant le vainqueur
 let messageWinner = () => {
@@ -1229,19 +1319,19 @@ let messageWinner = () => {
     displayPlayer1.style.opacity = 0.3;
     if (onePlayer){
       if (victoriesPlayer1 > victoriesMorpion){
-        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\n\nVous menez " + victoriesPlayer1 + " à " + victoriesMorpion + '.';
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\nVous menez " + victoriesPlayer1 + " à " + victoriesMorpion + '.';
       } else if (victoriesPlayer1 < victoriesMorpion){
-        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\n\n" + play2.innerText + " mène " + victoriesMorpion + " à " + victoriesPlayer1 + '.';
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\n" + play2.innerText + " mène " + victoriesMorpion + " à " + victoriesPlayer1 + '.';
       } else {
-        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\n\nVous êtes à " + victoriesPlayer1 + " partout.";
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\nVous êtes à " + victoriesPlayer1 + " partout.";
       };
     } else {
       if (victoriesPlayer1 > victoriesPlayer2){
-        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\n\nvous menez " + victoriesPlayer1 + " à " + victoriesPlayer2 + '.';
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\nVous menez " + victoriesPlayer1 + " à " + victoriesPlayer2 + '.';
       } else if (victoriesPlayer1 < victoriesPlayer2){
-        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\n\n" + play2.innerText + " mène " + victoriesPlayer2 + " à " + victoriesPlayer1 + '.';
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\n" + play2.innerText + " mène " + victoriesPlayer2 + " à " + victoriesPlayer1 + '.';
       } else {
-        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\n\nVous êtes à " + victoriesPlayer1 + " partout P1.";
+        messageWinPlayer.innerText = "Bravo " + play1.innerText + " !!!\nVous êtes à " + victoriesPlayer1 + " partout P1.";
       };
     }    
     modal0.style.display = 'block';
@@ -1256,11 +1346,11 @@ let messageWinner = () => {
     displayPlayer1.style.opacity = 0.3;
     modal0.style.display = 'block';
     if (victoriesMorpion > victoriesPlayer1){
-      messageWinPlayer.innerText = "Bravo " + play2.innerText + " !!! \n\nVous menez " + victoriesMorpion + " à " + victoriesPlayer1 + '.';
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + " !!! \nVous menez " + victoriesMorpion + " à " + victoriesPlayer1 + '.';
     } else if (victoriesMorpion < victoriesPlayer1){
-      messageWinPlayer.innerText = "Bravo " + play2.innerText + " !!! \n\n" + play1.innerText + " mène " + victoriesPlayer1 + " à " + victoriesMorpion + '.';;
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + " !!! \n" + play1.innerText + " mène " + victoriesPlayer1 + " à " + victoriesMorpion + '.';;
     } else {
-      messageWinPlayer.innerText = "Bravo " + play2.innerText + " !!! \n\nVous êtes à " + victoriesPlayer1 + " manche(s) partout.";
+      messageWinPlayer.innerText = "Bravo " + play2.innerText + " !!! \nVous êtes à " + victoriesPlayer1 + " manche(s) partout.";
     };
     // start.disabled = true;  
     // restart.disabled = true; 
@@ -1353,8 +1443,7 @@ let win = () => {
 btnBeginWindowWinner.addEventListener('click', () => {
   modal0.style.display = "none";
   modal3.style.display = "block";
-  TimeWindowHonor();
-  // gameWinned = false;
+  TimeWindowHonor(); /* affiche la fenêtre 'honneur au perdant' */
   endGame = false;
   if (onePlayer){
     player1 = true;
@@ -1374,7 +1463,10 @@ btnBeginWindowWinner.addEventListener('click', () => {
   if (onePlayer && player1Win){
     handNumber++;
     boxToPlay = box5;
-    boxToPlay.innerText = 'X';
+    setTimeout(()=>{
+      boxToPlay.innerText = 'X';
+      boxToPlay.style.fontSize = "75px";      
+    }, 2100);
     /* actualisation du tableau des combinaisons possibles pour le joueur 1 */
     for (let i = 0; i < tablePossibleCombinationsPlayer1.length ; i++){
       if (tablePossibleCombinationsPlayer1[i].includes(boxToPlay)){ /* si la case jouée est dans le tableau des combinaisons possibles du joueur 1*/
