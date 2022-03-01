@@ -1,6 +1,5 @@
 let player1 = true;    /* c'est à player1 de jouer */
 let onePlayer = true;  /* partie à 1 joueur */
-// let firstGamer = true; /* player 1 est le premier joueur à jouer contre MORPION - partie à 1 joueur */
 let easyGame = false;
 let middleGame = false;
 let hardGame = false;
@@ -19,13 +18,10 @@ let colorsPlayer2 = document.getElementById('colors_player2');
 colorsPlayer1.style.cursor = 'pointer';
 colorsPlayer2.style.cursor = 'pointer';
 
-let colorOne = document.getElementById('color_one');
-
-
 // let Grid = document.getElementById('grid');
 // Grid.style.background = 'rgba(0,0,0,0.4)';
 
-
+/* ------------------------------------------------------------------------*/
 /* chaque joueur clique sur la couleur de son choix */
 let choiceColorTop = () => {
   for (let element of colorTop){
@@ -91,9 +87,7 @@ let clicColorBottom = (event) => {
 
 choiceColorTop();
 choiceColorBottom();
-
 /* ------------------------------------------------------------------------*/
-
 
 let numberRows = 3;
 let numberCols = 3;
@@ -107,8 +101,6 @@ for (let i = 1 ; i <= numberRows ; i++){
   createDiv.style.display = 'flex';
   createDiv.style.justifyContent = 'center';
   createDiv.style.textAlign = 'center';
-  // createDiv.style.lineHeight = '150px';
-  // createDiv.style.textAlign = 'center';
   for (let j = 1 ; j <= numberCols; j++){
     let creatBox = document.createElement('div');
     creatBox.id = 'box'+ (j + numberCols*(i-1));
@@ -116,6 +108,7 @@ for (let i = 1 ; i <= numberRows ; i++){
     createDiv.appendChild(creatBox);    
   };
 };
+
 let tableBox;
 let tableBoxes = [];
 let tabHorizontalCombinations = [];
@@ -127,8 +120,10 @@ let initialisationTables = () => {
   /* creation du tableau des cases */
   tableBox = document.getElementsByClassName('box');
 
-  // /* conversion de l'objet tableBox en tableau */
-  // tableBoxes = [];
+  /*------------------*/
+  
+  /* conversion de l'objet tableBox en tableau */
+  tableBoxes = [];
 
   /* création d'autant de sous-tableaux qu'il y a de lignes */
   for (let i = 0 ; i < numberRows ; i++){
@@ -140,6 +135,8 @@ let initialisationTables = () => {
     let index = Math.floor(i / numberCols);
     tableBoxes[index].push(tableBox[i]);
   };
+
+  /* ---------------- */
 
   /* tableau des combinaisons gagnantes horizontales */
   for (let i = 0; i < tableBoxes.length; i++){
@@ -169,7 +166,7 @@ let initialisationTables = () => {
         tabDiagonalCombinations[k].push(tableBoxes[i][j]);
       };
       k++;
-      if ((i === 1 && j === 1) || (i-j ===2) || (j-i ===2)){
+      if ((i+j) === tableBoxes.length - 1){
         tabDiagonalCombinations[k].push(tableBoxes[i][j]);
       };
     };
@@ -194,6 +191,7 @@ let blankTableCombinations = () => {
   };
 };
 
+
 /* copie du tableau des cases = tableau des cases restantes */
 let tableBoxRemaining = [...tableBox];
 
@@ -209,13 +207,12 @@ let tableWinningCombinations = [
   [tableBox[2], tableBox[4],tableBox[6]],
 ];
 
-// création d'une copie de la table des combinaisons gagnantes
-
+/* création d'une copie de la table des combinaisons gagnantes */
 let copyTableCombinations = [...tableWinningCombinations];
 
 // let tableBoxPlayer1 = [];
 let tableBoxMorpion = [];
-let tablePossibleCombinations = [];
+// let tablePossibleCombinations = [];
 let tablePossibleCombinationsPlayer1 = [];
 let tablePossibleCombinationsPlayer2 = [];
 let tablePossibleCombinationsMorpion = [];
@@ -223,13 +220,15 @@ let defense = false;
 
 let start = document.getElementById('start');
 let restart = document.getElementById('restart');
-// restart.disabled = true;    
 
 // initialisation de l'affichage du tableau
 let displayTableDark = () => {  
-  for (let i = 0 ; i < tableBox.length ; i++){
-    tableBox[i].style.background = 'rgba(0,0,0,0.3)';
-  };
+  for (let element of tableBox){
+    element.style.background = 'rgba(0,0,0,0.3)';
+  }
+  // for (let i = 0 ; i < tableBox.length ; i++){
+  //   tableBox[i].style.background = 'rgba(0,0,0,0.3)';
+  // };
 };
 
 // Affichage du tableau en mode jeu
@@ -240,18 +239,16 @@ let displayTableClear = () => {
 };
 
 let endGame = false;
-
 let handNumber = 0;
 let displayPlayer1 = document.getElementById('player1');
 let displayPlayer2 = document.getElementById('player2');
 let round = document.getElementById('round');
 let cross = document.getElementById('cross');
-
 let startGame = document.getElementById('start_game');
 
-
+/* -------------------------------------*/
+/* le bouton commencer clignote à l'ouverture de la page */
 let intervalId;
-
 
 let changeBorderColor = () => {  
   if (!intervalId) {
@@ -267,10 +264,8 @@ let flashColor = () => {
     }
 };
 
-// setInterval(delayStartGame, 500);
 changeBorderColor();
-
-
+/* --------------------------------------*/
 
 let victoriesPlayer1 = 0;
 let victoriesMorpion = 0;
@@ -279,16 +274,12 @@ let player1Win = true;
 let morpionWin = false;
 let namePlayer1 = document.getElementById('namePlayer1');
 let namePlayer2 = document.getElementById('namePlayer2');
-// let gameWinned = false;
 
 let initialParameters = () => {
-  for (let i = 0 ; i < tableBox.length ; i++){
-    tableBox[i].innerText = '';
-    // tableBox[i].style.cursor = 'default';
-    displayTableDark();
+  for (let element of tableBox){
+    element.innerText = '';
+    displayTableDark(); 
   };
-  // minimisedGameActivated = false;
-  // startGameActivated = false;
   handNumber = 0;
   displayPlayer1.style.opacity = 0.3;
   displayPlayer2.style.opacity = 0.3;
@@ -337,6 +328,7 @@ let initialParameters = () => {
   //   };
   // };
 
+  /* toutes les couleurs sont au petit format */
   for (let element of colorTop){
     element.style.padding = '0px';
   };
@@ -350,11 +342,14 @@ initialParameters();
 let initialParametersBegin = () => {  
 
   // réinitialisation de la grille
-  for (let i = 0 ; i < tableBox.length ; i++){
-    tableBox[i].innerText = '';
-    // tableBox[i].style.cursor = 'default';
-    displayTableClear();
+  for (let element of tableBox){
+    element.innerText = '';
+    displayTableClear(); 
   };
+  // for (let i = 0 ; i < tableBox.length ; i++){
+  //   tableBox[i].innerText = '';
+  //   displayTableClear();
+  // };
   
   handNumber = 0;
   endGame = false;
@@ -381,6 +376,7 @@ let initialParametersBegin = () => {
 
   /* réinitialisation du tableau vierge des combinaisons */
   blankTableCombinations();
+
   // for (let i =0; i < concat.length; i++){
   //   concatInnerText[i] = []
   // };
@@ -391,84 +387,36 @@ let initialParametersBegin = () => {
   // };
 };
 
+// let hand1 = document.getElementById('hand1');
 
-
-let svg1 = '<svg id="svgHand1" class="svg1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85 96.04"><title>round5</title><g id="Calque_2" data-name="Calque 2"><g id="Calque_1-2" data-name="Calque 1"><path d="M85,47.05c0,32-19.46,49-43.19,49C17.25,96,0,77,0,48.85,0,19.32,18.35,0,43.19,0,68.58,0,85,19.46,85,47.05ZM12.83,48.57c0,19.87,10.77,37.67,29.67,37.67S72.3,68.72,72.3,47.6c0-18.48-9.65-37.8-29.66-37.8S12.83,28.15,12.83,48.57Z" /></g></g></svg>';
-let svg2 = '<svg id="svgPlayer1" class="svg2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85 96.04"><title>round5</title><g id="Calque_2" data-name="Calque 2"><g id="Calque_1-2" data-name="Calque 1"><path d="M85,47.05c0,32-19.46,49-43.19,49C17.25,96,0,77,0,48.85,0,19.32,18.35,0,43.19,0,68.58,0,85,19.46,85,47.05ZM12.83,48.57c0,19.87,10.77,37.67,29.67,37.67S72.3,68.72,72.3,47.6c0-18.48-9.65-37.8-29.66-37.8S12.83,28.15,12.83,48.57Z" /></g></g></svg>';
-let svg3 = '<svg id="svgHand2" class="svg3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72.03 93.18"><title>cross</title><g id="Calque_2" data-name="Calque 2"><g id="Calque_1-2" data-name="Calque 1"><path d="M58.06,93.18,46.17,72.58c-4.84-7.88-7.88-13-10.78-18.39h-.28C32.49,59.58,29.86,64.56,25,72.72L13.82,93.18H0L28.48,46,1.11,0h14l12.3,21.84c3.46,6.09,6.09,10.79,8.57,15.76h.42c2.62-5.53,5-9.81,8.43-15.76L57.51,0H71.33L43,45.34,72,93.18Z"/></g></g></svg>';
-let svg4 = '<svg id="svgPlayer2" class="svg4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72.03 93.18"><title>cross</title><g id="Calque_2" data-name="Calque 2"><g id="Calque_1-2" data-name="Calque 1"><path d="M58.06,93.18,46.17,72.58c-4.84-7.88-7.88-13-10.78-18.39h-.28C32.49,59.58,29.86,64.56,25,72.72L13.82,93.18H0L28.48,46,1.11,0h14l12.3,21.84c3.46,6.09,6.09,10.79,8.57,15.76h.42c2.62-5.53,5-9.81,8.43-15.76L57.51,0H71.33L43,45.34,72,93.18Z"/></g></g></svg>';
-
-
-
-let first = document.getElementById('first');
-first.style.cursor = 'pointer';
-first.style.color = 'red';
-first.addEventListener('click', ()=> {
-  first.style.color = 'blue';
-  
-  setTimeout(()=>{
-    first.style.color = 'red';
-  }, 1000);
-
-
-
-})
-
-
-
-
-// let second = document.getElementById('second');
-// let third = document.getElementById('third');
-// first.innerHTML = svg2;
-// second.innerHTML = svg2;
-// third.innerHTML = svg2;
-
-// if(first.innerHTML === "'" + svg2 + "'" ){
-//   console.log('ok')
-// } else {
-//   console.log('non')
-// };
-// console.log(first.innerHTML)
-// console.log(second.innerHTML)
-// console.log(third.innerHTML)
-
-
-
-
-let blue = 'blue';
-let hand1 = document.getElementById('hand1');
-// hand1.innerHTML = svg1;
-
-let svgHand1 = document.getElementById('svgHand1');
-let svgPlayer1 = document.getElementById('svgHand1');
-let svgHand2 = document.getElementById('svgHand1');
-let svgPlayer2 = document.getElementById('svgHand1');
+// let svgHand1 = document.getElementById('svgHand1');
+// let svgPlayer1 = document.getElementById('svgHand1');
+// let svgHand2 = document.getElementById('svgHand1');
+// let svgPlayer2 = document.getElementById('svgHand1');
 // svgHand1.style.fill = 'chocolate';
 
-let hand2 = document.getElementById('hand2');
+// let hand2 = document.getElementById('hand2');
 // let img = document.getElementById('img');
 // img.style.fill = "red";
+
+
 // initialise l'affichage de la main 
-let initializedHand = () => {
-  hand1.textContent = '';
-  hand2.textContent = '';
-};
+// let initializedHand = () => {
+//   hand1.textContent = '';
+//   hand2.textContent = '';
+// };
 
 let gameWon = false;
 
 let play1 = document.getElementById('player1');
 let play2 = document.getElementById('player2');
 let modal0 = document.getElementById("window-winner");
-
 let modal1 = document.getElementById("window-open");
-let modalContent1 = document.getElementById("modalContent1");
-// modalContent1.style.height = "50vh";
 let modal2 = document.getElementById("window-equality");
 let modal3 = document.getElementById("window-honor");
-// modal3.style.display = 'block';
-let modalContent = document.getElementById("modalContent");
+// let modalContent = document.getElementById("modalContent");
+let modalContent1 = document.getElementById("modalContent1");
 let modalContent2 = document.getElementById("modalContent2");
-// modalContent2.style.height = "50vh";
 let btnBeginWindowWinner = document.getElementById('begin_Button_window_winner');
 let btnRestartWindowWinner = document.getElementById('restart_Button_window_winner');
 let btnBeginWindowEquality = document.getElementById('begin_Button_window_equality');
@@ -480,17 +428,7 @@ let messageWinPlayer = document.getElementById('messageWinPlayer');
 let equality = document.getElementById('messageEquality');
 let btnGames = document.getElementById('btnGames');
 
-// 
-// minimisedGame.addEventListener('click', () => {
-//   minimisedGameActivated = true;
-//   btnStarts.style.display = 'block';
-//   btnGames.style.display = 'none';
-//   endGame = false;
-//   // start.disabled = false;  
-// });
-
-
-
+/*  ---------------------------------------------------------------*/
 // fonction pour régler le temps de réponse du joueur morpion
 let boxToPlay = '';
 let timeOutResponseMorpion = '';
@@ -502,7 +440,7 @@ let delayResponseMorpion = () => {
 let responseMorpion = ()=>{
   timeOutResponseMorpion = window.setTimeout(delayResponseMorpion, 0);
 };
-
+/*  ---------------------------------------------------------------*/
 
 // fonction pour fixer le délai d'affichage de la fenêtre "honneur au perdant"
 let timeOutWindowHonor = '';
@@ -513,10 +451,8 @@ let TimeWindowHonor = ()=>{
   timeOutResponseMorpion = window.setTimeout(delayWindowHonor, 2000);
 };
 
-
-
-
-/* on remplit un tableau de combinaisons vierge des différentes cases jouées par les joueurs */
+/* -------------------------------------------------------------------------------------------------------------*/
+/* on remplit un tableau à mesure que les joueurs jouent à partir du tableau des combinaisons vierges */
 let boxPlayed = "";
 let blankTableCombinationsCompleted = () => {
   for (let i = 0 ; i < concat.length; i++){
@@ -526,8 +462,9 @@ let blankTableCombinationsCompleted = () => {
         concatInnerText[i][j] = roundOrCross();
       };
     };
-  };
+  };  
 };
+
 let roundOrCross = () => {
   if (player1){
     return "O";
@@ -535,49 +472,41 @@ let roundOrCross = () => {
     return "X";
   }
 };
+/* -------------------------------------------------------------------------------------------------------------*/
 
 let simpleGame = () => {
-  for (i = 0 ; i < tableBox.length ; i++){
-    clic(tableBox[i]);
+  for (let element of tableBox){
+    clic(element);
   };
 };
 
 // fonction appelée lorsqu'on clique sur une case. Suivant le joueur, on met un rond ou une croix et on détermine le gagnant ou l'égalité.
 let clic = (event) => { 
-  // start.disabled = false; 
   event.addEventListener('click', (e)=>{   
-    if (endGame || event.innerText !== '' /*|| start.disabled === false*/){
+    if (endGame || event.innerText !== ''){
       e.preventDefault();
     } 
     
     else if (!onePlayer){ /* partie à 2 joueurs */
       if (player1){
         handNumber ++;
-        // audioPlayer1.play();
+        audioPlayer1.play();
         event.innerText = "O"; 
         event.style.fontSize = "75px";
         event.style.color = colorPlayer1;
+
         /* actualisation du tableau des cases restantes */
         let index = tableBoxRemaining.indexOf(event);
         tableBoxRemaining.splice(index, 1);    
-        // event.innerHTML = svg2;
-        // event.style.color = 'blue';
-
-
         
         /* on remplit un tableau de combinaisons vierge des différentes cases jouées par les joueurs */
         // boxPlayed = event;
         // blankTableCombinationsCompleted();    
         win();             /* on appelle la fonction pour savoir si le joueur a gagné après avoir joué son coup */
         messageEquality(); /* on appelle la fonction si les joueurs ont fait égalité */
-        // whoPlay();         /* on indique quel joueur commence */
         displayPlayer1.style.opacity = 0.3;          
         displayPlayer2.style.opacity = 1;
         player1 = false;
-
-        
-
-
 
       } else {
         handNumber ++;
@@ -591,7 +520,6 @@ let clic = (event) => {
         tableBoxRemaining.splice(index, 1);
         win();
         messageEquality();
-        // whoPlay();
         displayPlayer1.style.opacity = 1;
         displayPlayer2.style.opacity = 0.3;
         player1 = true;
@@ -1377,7 +1305,6 @@ btn1.addEventListener('click', (event) => {
   modal1.style.display = 'none';
   displayTableDark();
   endGame = false;
-  // firstGamer = true;
 
   if (onePlayer){
     play2.innerText = "morpion";
@@ -1386,13 +1313,13 @@ btn1.addEventListener('click', (event) => {
     simpleGame();
     displayTableClear();
     if (player1){
-      hand1.innerText = 'O';
+      // hand1.innerText = 'O';
       play1.style.opacity = 1;
     };
     firstGame = false;
   } else {
     displayTableClear();
-    hand1.innerText = 'O';
+    // hand1.innerText = 'O';
     play1.style.opacity = 1;
     event.preventDefault();
   };
@@ -1460,10 +1387,7 @@ let messageWinner = () => {
       };
     }    
     modal0.style.display = 'block';
-    // start.disabled = true;  
-    // restart.disabled = true; 
     player1Win = true;
-    // gameWinned = true;
     endGame = true;
   } else if (onePlayer){    
     victoriesMorpion ++;
@@ -1477,10 +1401,7 @@ let messageWinner = () => {
     } else {
       messageWinPlayer.innerText = "Bravo " + play2.innerText + " !!! \nVous êtes à " + victoriesPlayer1 + " manche(s) partout.";
     };
-    // start.disabled = true;  
-    // restart.disabled = true; 
     morpionWin = true;
-    // gameWinned = true;
     endGame = true;
     player1Win = false;
   } else {
@@ -1631,7 +1552,7 @@ btnBeginWindowEquality.addEventListener('click', () => {
 /* bouton réinitialiser de la la fenêtre "partie gagnée" */
 btnRestartWindowWinner.addEventListener('click', () => {
   initialParameters();
-  initializedHand();  
+  // initializedHand();  
   modal0.style.display = "none";
   modal1.style.display = 'block';
   play1.textContent = 'Player 1';
@@ -1654,7 +1575,7 @@ btnRestartWindowWinner.addEventListener('click', () => {
 /* bouton réinitialiser de la la fenêtre "égalité" */
 btnRestartWindowEquality.addEventListener('click', () => {
   initialParameters();
-  initializedHand();  
+  // initializedHand();  
   modal2.style.display = "none";
   modal1.style.display = 'block';
   play1.textContent = 'Player 1';
