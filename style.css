@@ -27,6 +27,7 @@ h1 {
   text-transform: uppercase;
   font-size: 26px;
   background: white;
+  
 }
 
 #grid {
@@ -86,11 +87,10 @@ h1 {
   height: 100px;
 }
 
-
-
 .colors {
   display: flex;
   align-items: center;
+  margin-left: auto;
 }
 
 .color {
@@ -101,11 +101,12 @@ h1 {
   -moz-border-radius: 20px;
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
-  margin: 2px;
+  margin: 4px;
+  /* border: 3px solid black; */
 }
 
 .color_one {
-  background: blue;
+  background-color: blue;
 }
 .color_two {
   background: red;
@@ -213,12 +214,7 @@ h1 {
   width: 30px;
 }
 
-.row {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  /* line-height: 150px; */
-}
+
 
 .modal1 {
   display: none; 
@@ -323,7 +319,7 @@ h1 {
 .text_honor {
   width: 100%;
   text-transform: uppercase;
-  letter-spacing: .1em;
+  /* letter-spacing: .1em; */
 }
 
 #modalContent {
@@ -351,7 +347,7 @@ h1 {
   /* width: 50%; */
   justify-content: space-evenly;
   align-items: center;
-  margin: 10px 0;
+  margin: 20px 0;
 }
 
 .namePlayers input:first-child {
@@ -377,8 +373,9 @@ h1 {
 .row_player {
   display: flex;
   justify-content: space-between;
-  max-width: 300px;
-  margin: 0 auto;
+  max-width: 350px;
+  height: 45px;
+  /* margin: 0 auto; */
 }
 
 .level {
@@ -390,6 +387,11 @@ h1 {
   flex-direction: column;
 }
 
+.btn_player {
+  height: 45px;
+  line-height: calc(66px/2);
+}
+
 .formulaire {
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -398,6 +400,8 @@ h1 {
   -o-border-radius: 5px;
   padding: 5px;
 }
+
+
 
 .name_player {
   border: 1px solid rgb(206,212,218);
@@ -419,6 +423,18 @@ input[type="text"]:focus {
 
 label {
   padding: 5px;
+  /* height: 50px; */
+  /* vertical-align: middle; */
+}
+
+.label_player {
+  /* height: 50px; */
+  /* line-height: 50px; */
+  /* vertical-align: middle; */
+  /* margin: auto 0; */
+  /* display: inline-block; */
+  /* margin: auto; */
+  /* vertical-align: middle; */
 }
 
 .btn_submit {
@@ -472,32 +488,15 @@ label {
   /* letter-spacing: .1em; */
 }
 
-.honor_text {
 
-}
-
-/* The Close Button */
-.close {
-  position: absolute;
-  /* display: inline-block; */
-  color: #aaa;
-  bottom: 0;
-  right: 0;
-  font-size: 28px;
-  font-weight: bold;
-  width: auto;  
-}
-
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
 
 @media screen and (min-width : 530px){
   .box {
     line-height: 150px;
+  }
+
+  .btn_players {
+    align-items: center;
   }
 }
 
@@ -617,11 +616,7 @@ label {
     /* border: 1px red solid; */
     outline: none;
   }
-  
-  label {
-    padding: 5px;
-  }
-  
+    
   .btn_submit {
     margin-top: auto;
     text-align: end;
@@ -632,22 +627,3 @@ label {
     padding: 20px;
   }
     
-  /* The Close Button */
-  .close {
-    position: absolute;
-    /* display: inline-block; */
-    color: #aaa;
-    bottom: 0;
-    right: 0;
-    font-size: 28px;
-    font-weight: bold;
-    width: auto;  
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-  }
-}
