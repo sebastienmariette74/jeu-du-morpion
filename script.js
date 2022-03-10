@@ -1625,10 +1625,22 @@ btnRestartWindowWinner.addEventListener('click', () => {
   initialisationTables();
   modal0.style.display = "none";
   modal1.style.display = 'block';
-  play1.textContent = 'Player 1';
-  play2.textContent = 'Player 2'; 
+  namePlayer1.value = "";
+  namePlayer2.value = "";
+  textJoueur1.text = "";
+  textJoueur2.text = "";
   namePlayer2.style.display = 'none';
   firstPlayer.style.display = 'none';  
+  if (btnRadio1.checked){
+    namePlayer2.style.display = 'none';
+    firstPlayer.style.display = 'none';
+    level.style.display = 'block';
+  } else {
+    namePlayer2.style.display = 'block';
+    firstPlayer.style.display = 'block';
+    level.style.display = 'none';
+  }
+
   btnRadio2.addEventListener('click', () => {
     namePlayer2.style.display = 'block';
     firstPlayer.style.display = 'block';
@@ -1659,10 +1671,21 @@ btnRestartWindowEquality.addEventListener('click', () => {
   initialisationTables();
   modal2.style.display = "none";
   modal1.style.display = 'block';
-  play1.textContent = 'Player 1';
-  play2.textContent = 'Player 2'; 
+  namePlayer1.value = "";
+  namePlayer2.value = "";
+  textJoueur1.text = "";
+  textJoueur2.text = "";
   namePlayer2.style.display = 'none';
   firstPlayer.style.display = 'none';  
+  if (btnRadio1.checked){
+    namePlayer2.style.display = 'none';
+    firstPlayer.style.display = 'none';
+    level.style.display = 'block';
+  } else {
+    namePlayer2.style.display = 'block';
+    firstPlayer.style.display = 'block';
+    level.style.display = 'none';
+  }
   btnRadio2.addEventListener('click', () => {
     namePlayer2.style.display = 'block';
     firstPlayer.style.display = 'block';
