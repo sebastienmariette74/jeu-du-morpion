@@ -356,6 +356,7 @@ let btnRestartWindowWinner = document.getElementById('restart_Button_window_winn
 let btnBeginWindowEquality = document.getElementById('begin_Button_window_equality');
 let btnRestartWindowEquality = document.getElementById('restart_Button_window_equality');
 let firstPlayer = document.getElementById('firstPlayer');
+let selected = document.getElementById('selected');
 let textJoueur1 = document.getElementById('textJoueur1');
 let textJoueur2 = document.getElementById('textJoueur2');
 let messageWinPlayer = document.getElementById('messageWinPlayer');
@@ -1398,7 +1399,10 @@ btn1.addEventListener('click', (event) => {
 // lorsque le joueur 1 entre son nom, ce dernier s'ajoute à la liste select
 namePlayer1.addEventListener('change', () => {
   textJoueur1.text = namePlayer1.value /* + ' commence'*/ ;
-});
+});namePlayer1.value = "";
+namePlayer2.value = "";
+textJoueur1.text = "";
+textJoueur2.text = "";
 // lorsque le joueur 2 entre son nom, ce dernier s'ajoute à la liste select
 namePlayer2.addEventListener('change', () => {
   textJoueur2.text = namePlayer2.value /* + ' commence'*/ ;
@@ -1629,6 +1633,7 @@ btnRestartWindowWinner.addEventListener('click', () => {
   namePlayer2.value = "";
   textJoueur1.text = "";
   textJoueur2.text = "";
+  firstPlayer.selectedIndex = '0';
   namePlayer2.style.display = 'none';
   firstPlayer.style.display = 'none';  
   if (btnRadio1.checked){
@@ -1674,7 +1679,8 @@ btnRestartWindowEquality.addEventListener('click', () => {
   namePlayer1.value = "";
   namePlayer2.value = "";
   textJoueur1.text = "";
-  textJoueur2.text = "";
+  textJoueur2.text = "";  
+  firstPlayer.selectedIndex = '0';
   namePlayer2.style.display = 'none';
   firstPlayer.style.display = 'none';  
   if (btnRadio1.checked){
