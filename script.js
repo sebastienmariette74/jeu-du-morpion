@@ -120,6 +120,7 @@ let numberDiags = 2;
 for (let i = 1 ; i <= numberRows ; i++){
   let createDiv = document.createElement('div');
   createDiv.id = 'row';  
+  createDiv.classList = '.row';    
   grid.appendChild(createDiv);
   createDiv.style.display = 'flex';
   createDiv.style.justifyContent = 'center';
@@ -168,11 +169,8 @@ let initialisationTables = () => {
   /* creation du tableau des cases */
   tableBox = document.getElementsByClassName('box');
 
-  /* copie du tableau des cases = tableau des cases restantes */
-  tableBoxRemaining = [...tableBox];
-
   /* initialisation du tableau restant*/
-  tableBoxRemaining = [...tableBox];  
+  tableBoxRemaining = [...tableBox]; 
 
   /* ------- conversion de l'objet tableBox en tableau conforme à la grille ------ */
   /* création d'autant de sous-tableaux qu'il y a de lignes */
@@ -183,7 +181,7 @@ let initialisationTables = () => {
   /* répartition dans le tableau tableBoxes des différentes cases */
   for (let i = 0 ; i < tableBox.length ; i++){
     let index = Math.floor(i / numberCols);
-    tableBoxes[index].push(tableBox[i]);
+    tableBoxes[index].push(tableBox[i]); 
   };
   /* ------------------------------------------------------------------------------- */
 
@@ -365,7 +363,7 @@ let btnGames = document.getElementById('btnGames');
 let boxPlayed = '';
 
 /* ------- fonction pour fixer le délai d'affichage de la fenêtre "honneur au perdant" ---------------- */
-let timeOutWindowHonor = '';
+// let timeOutWindowHonor = '';
 let delayWindowHonor = () => {
   modal3.style.display = "none";
 };
@@ -443,7 +441,7 @@ let clic = (event) => {
 
         /* actualisation du tableau des cases restantes */
         let index = tableBoxRemaining.indexOf(event);
-        tableBoxRemaining.splice(index, 1);
+        tableBoxRemaining.splice(index, 1); 
 
         boxPlayed = event;
         blankTableCombinationsCompleted();
