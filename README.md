@@ -1,6 +1,5 @@
-# Projet Jeu du Morpion
-[Jeu du Morpion](https://sebastienmariette74.github.io/morpion-game/)
-
+# Projet Jeu du Morpion - [site](https://sebastienmariette74.github.io/morpion-game/)
+Projet réalisé au début de ma formation de Développeut Web et Web Mobile chez STUDI.
 ## Technologies
 HTML, CSS, Bootstrap, Javascript
 
