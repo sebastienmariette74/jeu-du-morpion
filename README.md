@@ -7,7 +7,7 @@ HTML, CSS, Bootstrap, Javascript
 
 ### Objectifs
 
-Création du jeu du Morbion avec Javascript.
+Création du jeu du Morpion avec Javascript.
 
 ### Règles
 
